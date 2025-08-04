@@ -1,0 +1,25 @@
+
+:root {
+    --primary-color: #3b82f6;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #f59e0b;
+    --accent-color: #10b981;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --background-light: #f8fafc;
+    --background-white: #ffffff;
+    --border-color: #e5e7eb;
+    --hover-bg: #eff6ff;
+}
+
+        .custom-primary { color: var(--primary-color); }
+        .custom-primary-bg { background-color: var(--primary-color); }
+        .custom-primary-dark-bg { background-color: var(--primary-dark); }
+        .custom-secondary { color: var(--secondary-color); }
+        .custom-accent { color: var(--accent-color); }
+        .custom-text-primary { color: var(--text-primary); }
+        .custom-text-secondary { color: var(--text-secondary); }
+        .custom-bg-light { background-color: var(--background-light); }
+        .custom-bg-white { background-color: var(--background-white); }
+        .custom-border { border-color: var(--border-color); }
+        .custom-hover-bg { background-color: var(--hover-bg); }
