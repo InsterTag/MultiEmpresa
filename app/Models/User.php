@@ -9,35 +9,107 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    use HasFactory;
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    'name',
+    'last_name',
+    'document_type',
+    'document',
+    'phone',
+    'address',
+    'email',
+    'password',
+    'username',
+];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+
+
+    public function roles()
+    {
+    return $this->belongsToMany(Role::class, 'role_user')
+                ->using(RoleUser::class)
+                ->withTimestamps();
+    }
+
+    public function company() {
+        return $this->hasOne(Company::class);
+    }
+
+    public function carts() {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
+
+    public function paymentCards() {
+        return $this->hasMany(PaymentCard::class);
+    }
+
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
+    public function invoices() {
+        return $this->hasMany(Invoice::class);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
