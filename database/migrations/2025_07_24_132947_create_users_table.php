@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('last_name');
-            $table->enum('document_type', ['TI', 'CC', 'TE', 'CE']);
-            $table->string('document');
-            $table->string('phone');
-            $table->string('address');
+            $table->string('last_name')->nullable(); // Nullable para usuarios individuales
+            $table->enum('document_type', ['TI', 'CC', 'TE', 'CE'])->nullable(); // Nullable para usuarios individuales
+            $table->string('document')->nullable(); // Nullable para usuarios individuales
+            $table->string('phone')->nullable(); // Nullable para usuarios individuales
+            $table->string('address')->nullable(); // Nullable para usuarios individuales
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('username')->unique()->nullable();;
+            $table->string('username')->unique()->nullable();
+            $table->enum('role', ['user', 'business'])->default('user'); // Campo rol agregado
             $table->rememberToken();
             $table->timestamps();
         });
