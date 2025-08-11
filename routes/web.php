@@ -16,8 +16,6 @@ Route::get('/productos', function () {
     return view('welcome');
 })->name('productos');
 
-//perfiles
-
 //usuarios
 Route::get('/user', function () {
     return view('profiles.profile');
@@ -27,6 +25,12 @@ Route::get('/user', function () {
 Route::get('/company', function () {
     return view('profiles.company');
 })->name('company');
+
+//perfil usuario
+Route::get('/userprofile', function () {
+    return view('profiles.user.profile');
+})->name('userprofile');
+
 
 // === Usuario ===
 Route::get('/login/user', [UserAuthController::class, 'showLoginForm'])->name('login.user');
