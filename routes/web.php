@@ -12,8 +12,9 @@ Route::get('/', function () {
 
 //products
 Route::get('/productos', function () {
-    return view('welcome');
+    return view('products.products');
 })->name('productos');
+
 
 
 
