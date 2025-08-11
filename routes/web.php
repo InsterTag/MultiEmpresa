@@ -31,31 +31,13 @@ Route::get('/products', function () {return view('products');})->name('products'
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
-
-
-
-
-    Route::get('/profile', function () {return view('profiles.profile');})->name('profile');
+    Route::get('/profile', function () {return view('profiles.user.profile');})->name('profile');
 
 //empresas
 Route::get('/company', function () {
     return view('profiles.company');
 })->name('company');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // // === Empresa ===
 // Route::get('/login/company', [CompanyAuthController::class, 'showLoginForm'])->name('login.company');
 // Route::get('/register/company', [CompanyAuthController::class, 'showRegisterForm'])->name('register.company');

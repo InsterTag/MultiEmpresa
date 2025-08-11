@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Usuario - Marketplace Pro</title>
     @vite(['resources/css/app.css'])
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Font Awesome optimizado -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+    
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -141,41 +146,36 @@
     </div>
 
     <script>
-        // Toggle password visibility
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const password = document.getElementById('password');
-            const icon = this.querySelector('i');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordField = document.getElementById('password');
             
-            if (password.type === 'password') {
-                password.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                password.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+            if (togglePassword && passwordField) {
+                togglePassword.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordField.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
             }
-        });
 
-        // Form validation feedback
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const button = this.querySelector('button[type="submit"]');
-            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Iniciando sesión...';
-            button.disabled = true;
-        });
-
-        // Auto-detect email or username
-        document.getElementById('login').addEventListener('input', function(e) {
-            const value = e.target.value;
-            const label = document.querySelector('label[for="login"]');
-            const icon = label.querySelector('i');
+            // Form validation feedback
+            const form = document.querySelector('form');
+            const submitBtn = form?.querySelector('button[type="submit"]');
             
-            if (value.includes('@')) {
-                icon.className = 'fas fa-envelope text-blue-600 mr-2';
-                this.placeholder = 'tu@email.com';
-            } else {
-                icon.className = 'fas fa-user text-blue-600 mr-2';
-                this.placeholder = 'tu_usuario';
+            if (form && submitBtn) {
+                form.addEventListener('submit', function() {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Iniciando sesión...';
+                    submitBtn.disabled = true;
+                });
             }
         });
     </script>
