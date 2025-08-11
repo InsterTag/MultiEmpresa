@@ -29,26 +29,23 @@
                     <!-- Campo oculto para indicar tipo de usuario -->
                     <input type="hidden" name="user_type" value="user">
                     
-                    <!-- Email o Username -->
-                    <div>
-                        <label for="login" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-envelope text-blue-600 mr-2"></i>Email o nombre de usuario
-                        </label>
-                        <input type="text" 
-                               id="login" 
-                               name="login" 
-                               value="{{ old('login') }}"
-                               required 
-                               autofocus
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 @error('login') border-red-500 @enderror @error('email') border-red-500 @enderror"
-                               placeholder="tu@email.com o tu_usuario">
-                        @error('login')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                        @error('email')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-envelope text-blue-600 mr-2"></i>Email
+                </label>
+                <input type="email" 
+                    id="email" 
+                    name="email" 
+                    value="{{ old('email') }}"
+                    required
+                    autofocus
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 @error('email') border-red-500 @enderror"
+                    placeholder="tu@email.com">
+                @error('email')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
                     <!-- Password -->
                     <div>

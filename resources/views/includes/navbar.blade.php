@@ -246,32 +246,37 @@
                 <!-- Menú de perfil (cuando está autenticado) -->
                 @auth
                     <div class="profile-container relative">
-                        <button id="profileBtn" class="navbar-button custom-text-primary hover:custom-primary p-2 rounded-full border border-transparent hover:border-custom-border transition-all duration-300 flex items-center space-x-2">
-                            <div class="w-8 h-8 custom-primary-bg rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-white text-sm"></i>
-                            </div>
-                            <i class="fas fa-chevron-down text-xs transition-transform duration-300" id="profileIcon"></i>
+                        <button id="profileBtn" class="navbar-button custom-text-primary hover:custom-primary font-medium px-3 py-2 flex items-center space-x-2">
+                                <div class="w-8 h-8 custom-primary-bg rounded-full flex items-center justify-center">
+                                @php
+                                    $initial = auth()->user()->username ? strtoupper(substr(auth()->user()->username, 0, 1)) : strtoupper(substr(auth()->user()->name, 0, 1));
+                                @endphp
+                                <span class="text-white text-sm font-medium">{{ $initial }}</span>
+                                    </div>
+                                <span class="hidden sm:inline">{{ auth()->user()->username ?? auth()->user()->name }}</span>
+                                <i class="fas fa-chevron-down text-xs transition-transform duration-300" id="profileIcon"></i>
                         </button>
                         <!-- Dropdown de perfil -->
-                        <div id="profileDropdown" class="profile-dropdown custom-bg-white rounded-lg shadow-xl border custom-border">
-                            <div class="py-2">
-                                <div class="px-4 py-2 border-b custom-border">
-                                    <p class="text-sm custom-text-primary font-medium">{{ Auth::user()->name }}</p>
-                                    <p class="text-xs custom-text-secondary">{{ Auth::user()->email }}</p>
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 custom-bg-white rounded-lg shadow-xl border custom-border z-50">
+                                <div class="py-1">
+                                    <a href="{{ route('profile') }}" class="block px-4 py-2 custom-text-primary hover:custom-hover-bg">
+                                        <i class="fas fa-user mr-2"></i>Mi Perfil
+                                    </a>
+                                    <a href="#" class="block px-4 py-2 custom-text-primary hover:custom-hover-bg">
+                                        <i class="fas fa-shopping-bag mr-2"></i>Mis Pedidos
+                                    </a>
+                                    <a href="#" class="block px-4 py-2 custom-text-primary hover:custom-hover-bg">
+                                        <i class="fas fa-heart mr-2"></i>Favoritos
+                                    </a>
+                                    <div class="border-t custom-border"></div>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="w-full text-left px-4 py-2 custom-text-primary hover:custom-hover-bg">
+                                            <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+                                        </button>
+                                    </form>
                                 </div>
-                                <a href="{{ route('user') }}" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 custom-text-primary transition-all duration-300">
-                                    <i class="fas fa-user-circle custom-primary"></i>
-                                    <span>Mi Perfil</span>
-                                </a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="w-full flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 custom-text-primary transition-all duration-300">
-                                        <i class="fas fa-sign-out-alt custom-secondary"></i>
-                                        <span>Cerrar Sesión</span>
-                                    </button>
-                                </form>
                             </div>
-                        </div>
                     </div>
                 @endauth
                 <!-- Carrito de compras -->
@@ -315,7 +320,7 @@
 
             @auth
                 <div class="border-t custom-border pt-3 mt-3">
-                    <a href="{{ route('user') }}" class="block py-2 custom-text-primary font-medium">Mi Perfil</a>
+                    <a href="{{ route('profile') }}" class="block py-2 custom-text-primary font-medium">Mi Perfil</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="block py-2 custom-text-primary font-medium text-left w-full">Cerrar Sesión</button>
@@ -439,68 +444,296 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Elementos del modal
-    const modal = document.getElementById('registerModal');
-    const modalContent = document.getElementById('modalContent');
-    const openModalBtn = document.getElementById('openRegisterModal');
-    const openModalMobileBtn = document.getElementById('openRegisterModalMobile');
-    const closeModalBtn = document.getElementById('closeModal');
+(function() {
+    // Variables para elementos del DOM
+    const categoriesContainer = document.querySelector('.categories-container');
+    const categoriesBtn = document.getElementById('categoriesBtn');
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesIcon = document.getElementById('categoriesIcon');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    // Variables para funcionalidad de auth (solo existirán si están en el DOM)
+    const loginBtn = document.getElementById('loginBtn');
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginIcon = document.getElementById('loginIcon');
+    const profileBtn = document.getElementById('profileBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+    const profileIcon = document.getElementById('profileIcon');
+    
+    let categoriesTimeout;
 
-    // Función para abrir el modal
-    function openModal() {
-        modal.classList.remove('hidden');
-        // Pequeño delay para la animación
-        setTimeout(() => {
-            modalContent.classList.remove('scale-95', 'opacity-0');
-            modalContent.classList.add('modal-enter');
-        }, 10);
-
-        // Bloquear scroll del body
-        document.body.style.overflow = 'hidden';
+    // ========== FUNCIONALIDADES DEL DROPDOWN DE CATEGORÍAS ==========
+    
+    // Función para mostrar dropdown de categorías
+    function showCategoriesDropdown() {
+        clearTimeout(categoriesTimeout);
+        categoriesDropdown.classList.add('active');
+        categoriesDropdown.classList.remove('hidden');
+        categoriesIcon.style.transform = 'rotate(180deg)';
     }
 
-    // Función para cerrar el modal
-    function closeModal() {
-        modalContent.classList.remove('modal-enter');
-        modalContent.classList.add('modal-exit');
-
-        setTimeout(() => {
-            modal.classList.add('hidden');
-            modalContent.classList.remove('modal-exit');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            // Restaurar scroll del body
-            document.body.style.overflow = 'auto';
+    // Función para ocultar dropdown de categorías
+    function hideCategoriesDropdown() {
+        categoriesTimeout = setTimeout(() => {
+            categoriesDropdown.classList.remove('active');
+            categoriesDropdown.classList.add('hidden');
+            categoriesIcon.style.transform = 'rotate(0deg)';
         }, 300);
     }
 
-    // Event listeners
-    if (openModalBtn) {
-        openModalBtn.addEventListener('click', openModal);
+    // Event listeners para dropdown de categorías (hover y click)
+    if (categoriesContainer && categoriesDropdown) {
+        // Funcionalidad hover
+        categoriesContainer.addEventListener('mouseenter', showCategoriesDropdown);
+        categoriesContainer.addEventListener('mouseleave', hideCategoriesDropdown);
+        categoriesDropdown.addEventListener('mouseenter', () => clearTimeout(categoriesTimeout));
+        categoriesDropdown.addEventListener('mouseleave', hideCategoriesDropdown);
+        
+        // Funcionalidad click (para dispositivos táctiles)
+        if (categoriesBtn) {
+            categoriesBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (categoriesDropdown.classList.contains('hidden')) {
+                    showCategoriesDropdown();
+                } else {
+                    hideCategoriesDropdown();
+                }
+            });
+        }
     }
 
-    if (openModalMobileBtn) {
-        openModalMobileBtn.addEventListener('click', openModal);
+    // ========== FUNCIONALIDADES DE MODAL Y AUTENTICACIÓN ==========
+    
+    // Función para abrir modal con animación
+    function openModal(modal, icon) {
+        modal.classList.add('active');
+        modal.classList.remove('hidden');
+        if (icon) {
+            icon.style.transform = 'rotate(180deg)';
+        }
+        document.body.style.overflow = 'hidden';
     }
 
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', closeModal);
+    // Función para cerrar modal con animación
+    function closeModal(modal, icon) {
+        modal.classList.remove('active');
+        modal.classList.add('hidden');
+        if (icon) {
+            icon.style.transform = 'rotate(0deg)';
+        }
+        document.body.style.overflow = 'auto';
     }
 
-    // Cerrar modal al hacer click en el fondo
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeModal();
+    // Event listeners para modal de login (solo si existe)
+    if (loginBtn && loginModal) {
+        loginBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openModal(loginModal, loginIcon);
+        });
+    }
+
+    if (mobileLoginBtn && loginModal) {
+        mobileLoginBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openModal(loginModal, loginIcon);
+        });
+    }
+
+    if (closeLoginModal && loginModal) {
+        closeLoginModal.addEventListener('click', () => {
+            closeModal(loginModal, loginIcon);
+        });
+    }
+
+    // Cerrar modal al hacer click fuera
+    if (loginModal) {
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                closeModal(loginModal, loginIcon);
+            }
+        });
+    }
+
+    // ========== FUNCIONALIDADES DEL PERFIL DE USUARIO ==========
+    
+    // Event listeners para dropdown de perfil (solo si existe)
+    if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('hidden');
+            if (profileIcon) {
+                profileIcon.classList.toggle('rotate-180');
+            }
+        });
+    }
+
+    // ========== FUNCIONALIDADES GENERALES ==========
+    
+    // Cerrar modales con tecla Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (loginModal && loginModal.classList.contains('active')) {
+                closeModal(loginModal, loginIcon);
+            }
+            if (categoriesDropdown && !categoriesDropdown.classList.contains('hidden')) {
+                hideCategoriesDropdown();
+            }
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+                if (profileIcon) {
+                    profileIcon.classList.remove('rotate-180');
+                }
+            }
         }
     });
 
-    // Cerrar modal con la tecla Escape
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-            closeModal();
+    // Cerrar dropdowns al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        // Cerrar dropdown de categorías
+        if (categoriesDropdown && categoriesBtn && !categoriesBtn.contains(e.target) && !categoriesDropdown.contains(e.target)) {
+            categoriesDropdown.classList.add('hidden');
+            categoriesDropdown.classList.remove('active');
+            categoriesIcon.style.transform = 'rotate(0deg)';
+        }
+        
+        // Cerrar dropdown de perfil
+        if (profileDropdown && profileBtn && !profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.classList.add('hidden');
+            if (profileIcon) {
+                profileIcon.classList.remove('rotate-180');
+            }
         }
     });
-});
-</script>
 
+    // Menú móvil
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    // ========== ANIMACIONES Y EFECTOS VISUALES ==========
+    
+    // Animación suave al hacer scroll
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('nav');
+        if (navbar) {
+            if (window.scrollY > 10) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+            }
+        }
+    });
+
+    // Efecto de typing en la barra de búsqueda
+    const searchInputs = document.querySelectorAll('.search-input');
+    searchInputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.style.transform = 'scale(1.02)';
+            input.style.transition = 'transform 0.2s ease';
+        });
+        input.addEventListener('blur', () => {
+            input.style.transform = 'scale(1)';
+        });
+    });
+
+    // Animación para los elementos de categoría del dropdown
+    const dropdownCategoryItems = document.querySelectorAll('#categoriesDropdown .category-item');
+    dropdownCategoryItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.05}s`;
+        
+        // Efectos hover mejorados
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            this.style.transition = 'all 0.3s ease';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+        
+        // Click handler para categorías
+        item.addEventListener('click', () => {
+            console.log('Categoría seleccionada:', item.querySelector('h3').textContent);
+            hideCategoriesDropdown();
+            // Aquí puedes agregar la lógica para navegar a la categoría
+        });
+    });
+
+    // Animación para elementos de categoría generales
+    const categoryItems = document.querySelectorAll('.category-item');
+    categoryItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            this.style.transition = 'all 0.3s ease';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+    });
+
+    // ========== FUNCIONES DE UTILIDAD ==========
+    
+    // Función para detectar dispositivos táctiles
+    function isTouchDevice() {
+        return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+    }
+
+    // Ajustar comportamiento según el dispositivo
+    if (isTouchDevice()) {
+        // En dispositivos táctiles, usar solo click para categorías
+        if (categoriesContainer) {
+            categoriesContainer.removeEventListener('mouseenter', showCategoriesDropdown);
+            categoriesContainer.removeEventListener('mouseleave', hideCategoriesDropdown);
+        }
+    }
+
+    // ========== INICIALIZACIÓN ==========
+    
+    // Función de inicialización que se ejecuta cuando el DOM está listo
+    function initNavbar() {
+        console.log('Navbar inicializado correctamente');
+        
+        // Verificar que todos los elementos críticos existen
+        if (!categoriesDropdown) {
+            console.warn('Dropdown de categorías no encontrado');
+        }
+        
+        // Inicializar estados
+        if (categoriesDropdown) {
+            categoriesDropdown.classList.add('hidden');
+        }
+        
+        if (profileDropdown) {
+            profileDropdown.classList.add('hidden');
+        }
+        
+        if (loginModal) {
+            loginModal.classList.add('hidden');
+        }
+        
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+        }
+    }
+
+    // Ejecutar inicialización
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNavbar);
+    } else {
+        initNavbar();
+    }
+
+})();</script>
 @vite(['resources/css/navbar.css', 'resources/js/navbar.js'])

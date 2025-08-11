@@ -65,7 +65,7 @@ class AuthController extends Controller
         return redirect(route('home', absolute: false));
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
@@ -73,6 +73,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect(route('home', absolute: false));
+        return redirect('/');
     }
 }
