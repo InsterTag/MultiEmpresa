@@ -135,14 +135,6 @@
                         </a>
                     </div>
 
-                    <!-- Link a login empresa -->
-                    <div class="text-center pt-4 border-t border-gray-200">
-                        <p class="text-sm text-gray-600 mb-2">¿Eres una empresa?</p>
-                        <a href="" 
-                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-colors duration-300">
-                            <i class="fas fa-building mr-2"></i>Iniciar sesión como empresa
-                        </a>
-                    </div>
                 </form>
             </div>
         </div>
