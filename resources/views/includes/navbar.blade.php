@@ -234,14 +234,14 @@
             <div class="flex items-center space-x-4">
                 <!-- Botones de autenticación (cuando no está autenticado) -->
                 @guest
-                    <a href="{{ route('login.user') }}" class="navbar-button custom-text-primary hover:custom-primary font-medium px-3 py-2 flex items-center space-x-1 border border-transparent hover:border-custom-border rounded-lg transition-all duration-300">
+                    <a href="{{ route('login') }}" class="navbar-button custom-text-primary hover:custom-primary font-medium px-3 py-2 flex items-center space-x-1 border border-transparent hover:border-custom-border rounded-lg transition-all duration-300">
                         <i class="fas fa-sign-in-alt"></i>
                         <span class="hidden sm:inline">Iniciar Sesión</span>
                     </a>
                     <!-- Botón modificado para abrir el modal -->
-                    <button id="openRegisterModal" class="navbar-button custom-primary-bg hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-all duration-300">
-                        <span>Registrarse</span>
-                    </button>
+                    <a href="{{ route('register') }}" class="navbar-button custom-primary-bg hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-all duration-300">
+                        <span class="hidden sm:inline">Registrate</span>
+                    </a>
                 @endguest
                 <!-- Menú de perfil (cuando está autenticado) -->
                 @auth
@@ -307,7 +307,7 @@
             <!-- Botones de autenticación en móvil -->
             @guest
                 <div class="border-t custom-border pt-3 mt-3">
-                    <a href="{{ route('login.user') }}" class="block py-2 custom-text-primary font-medium">Iniciar Sesión</a>
+                    <a href="{{ route('login') }}" class="block py-2 custom-text-primary font-medium">Iniciar Sesión</a>
                     <!-- Botón móvil modificado para abrir el modal -->
                     <button id="openRegisterModalMobile" class="block py-2 custom-primary font-medium text-left w-full">Registrarse</button>
                 </div>
@@ -345,7 +345,7 @@
             <div class="space-y-4">
                 <!-- Opción Usuario Individual -->
                 <div class="group">
-                    <a href="{{ route('register.user') }}?type=user"
+                    <a href="{{ route('register') }}?type=user"
                        class="block p-6 rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
@@ -371,7 +371,7 @@
 
                 <!-- Opción Empresa -->
                 <div class="group">
-                    <a href="{{ route('register.company') }}?type=business"
+                    <a href="{{ route('register') }}?type=business"
                        class="block p-6 rounded-xl border-2 border-gray-200 hover:border-green-500 hover:bg-green-50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
@@ -401,7 +401,7 @@
         <div class="px-8 py-4 bg-gray-50 rounded-b-2xl">
             <p class="text-xs text-center custom-text-secondary">
                 ¿Ya tienes una cuenta?
-                <a href="{{ route('login.user') }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium">
                     Inicia sesión aquí
                 </a>
             </p>

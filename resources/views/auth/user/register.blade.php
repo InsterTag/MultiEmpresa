@@ -23,7 +23,7 @@
 
             <!-- Formulario -->
             <div class="bg-white rounded-2xl shadow-xl p-8">
-                <form method="POST" action="{{ route('register.user') }}" class="space-y-6">
+                <form method="POST" action="{{ route('register') }}" class="space-y-6">
                     @csrf
                     
                     <!-- Campo oculto para el rol -->
@@ -153,18 +153,9 @@
 
                     <!-- Link a login -->
                     <div class="text-center">
-                        <a href="{{ route('login.user') }}" 
+                        <a href="{{ route('login') }}" 
                            class="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-300">
                             <i class="fas fa-sign-in-alt mr-2"></i>Inicia sesión aquí
-                        </a>
-                    </div>
-
-                    <!-- Link a registro empresa -->
-                    <div class="text-center pt-4 border-t border-gray-200">
-                        <p class="text-sm text-gray-600 mb-2">¿Eres una empresa?</p>
-                        <a href="{{ route('register.user') }}?type=business" 
-                           class="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-colors duration-300">
-                            <i class="fas fa-building mr-2"></i>Registrarse como empresa
                         </a>
                     </div>
                 </form>
