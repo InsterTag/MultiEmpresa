@@ -261,40 +261,11 @@
 
                     <!-- Botón de registro -->
                     <button type="submit" 
-                            class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+                            class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800  font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
                         <i class="fas fa-building mr-2"></i>Registrar empresa
                     </button>
 
-                    <!-- Separador -->
-                    <div class="relative my-6">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-gray-300"></div>
-                        </div>
-                        <div class="relative flex justify-center text-sm">
-                            <span class="px-2 bg-white text-gray-500">¿Ya tienes cuenta?</span>
-                        </div>
-                    </div>
-
-                    <!-- Link a login -->
-                    <div class="text-center">
-                        <a href="{{ route('login.company') }}" 
-                           class="text-green-600 hover:text-green-700 font-medium transition-colors duration-300">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Inicia sesión aquí
-                        </a>
-                    </div>
-
-                    <!-- Link a registro usuario -->
-                    <div class="text-center pt-4 border-t border-gray-200">
-                        <p class="text-sm text-gray-600 mb-2">¿Eres usuario individual?</p>
-                        <a href="{{ route('register.company') }}?type=user" 
-                           class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-300">
-                            <i class="fas fa-user mr-2"></i>Registrarse como usuario
-                        </a>
-                    </div>
                 </form>
-            </div>
-        </div>
-    </div>
 
     <script>
         // Toggle password visibility
