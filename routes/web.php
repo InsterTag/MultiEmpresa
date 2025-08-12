@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\CompanyAuthController;
-
 //rutas vistas individuales
 
 //home
@@ -38,6 +38,10 @@ Route::get('/products', function () {return view('products');})->name('products'
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
     Route::get('/profile', function () {return view('profiles.user.profile');})->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profile.uploadImage');
+
+
 
 //empresas
 Route::get('/company', function () {

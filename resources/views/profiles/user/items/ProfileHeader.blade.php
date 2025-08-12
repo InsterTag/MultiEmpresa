@@ -22,19 +22,15 @@
             <div class="profile-image-container w-36 h-36 rounded-2xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-300 relative"
                  onclick="document.getElementById('fileInput').click()">
                 <img id="profileImage" 
-                     src=""
-                     alt="profile image" 
-                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('img/default.png') }}"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 <div class="upload-overlay">
                     <i class="fas fa-camera text-white text-2xl"></i>
                 </div>
             </div>
             
             <!-- Hidden file input -->
-            <input type="file" 
-                   id="fileInput" 
-                   accept="image/*" 
-                   onchange="handleImageUpload(event)">
+            <input type="file" id="fileInput" accept="image/*" onchange="handleImageUpload(event)">
             
             <!-- Camera button -->
             <button onclick="document.getElementById('fileInput').click()" 
@@ -89,7 +85,7 @@
         </div>
 
         <!-- Settings Form -->
-        <form id="settingsForm" method="POST" action="">
+        <form id="settingsForm" method="POST" action="{{ route('profile.update') }}">
             @csrf
             @method('PUT')
             
@@ -162,4 +158,7 @@
         </form>
     </div>
 </div>
+<script>
+    
+</script>
 @vite('resources/js/userUpdateImage.js')

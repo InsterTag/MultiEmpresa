@@ -244,44 +244,37 @@
         ProfileManager.init();
     }
     
-})(window);
 
-// Para uso en Laravel - Código PHP del controlador:
-/*
-Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage']);
 
-public function uploadImage(Request $request)
-{
-    try {
-        $request->validate([
-            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120'
-        ]);
+document.getElementById('fileInput').addEventListener('change', handleImageUpload);
 
-        $image = $request->file('profile_image');
-        $imageName = time().'.'.$image->extension();
-        
-        // Crear directorio si no existe
-        $uploadPath = public_path('uploads/profiles');
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('profile_image', file);
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+    fetch('/profile/upload-image', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            // Cambiar imagen en la vista
+            document.getElementById('profileImage').src = data.image_url;
+
+            // Mensaje de éxito
+            alert('Imagen actualizada correctamente');
+        } else {
+            alert('Error al subir la imagen');
         }
-        
-        $image->move($uploadPath, $imageName);
-        
-        // Actualizar la base de datos
-        auth()->user()->update(['profile_image' => '/uploads/profiles/'.$imageName]);
-        
-        return response()->json([
-            'success' => true,
-            'image_url' => '/uploads/profiles/'.$imageName,
-            'message' => 'Imagen actualizada exitosamente'
-        ]);
-        
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Error al subir la imagen: ' . $e->getMessage()
-        ], 500);
-    }
+    })
+    .catch(() => alert('Error en la conexión con el servidor'));
 }
-*/
+
+
+
+})(window);
