@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
+
 
 class ProfileController extends Controller
 {
@@ -26,20 +27,59 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        $user = Auth::user();
+
+        // Validación
         $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,' . $request->user()->id,
-    ]);
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
 
-    $request->user()->update([
-        'username' => $request->username,
-    ]);
+        // Actualizar username
+        $user->username = $request->username;
 
-        return back()->with('status', 'profile-updated');
+        // Actualizar contraseña si se envió
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Perfil actualizado correctamente.');
     }
 
-    /**
-     * Delete the user's account.
-     */
+
+
+
+    public function uploadImage(Request $request)
+{
+    $request->validate([
+        'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120'
+    ]);
+
+    $user = auth()->user();
+
+    if ($request->hasFile('profile_image')) {
+        // Guardar en storage/public/profile_images
+        $path = $request->file('profile_image')->store('profile_images', 'public');
+
+        // Actualizar usuario
+        $user->profile_image = $path;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'image_url' => asset('storage/' . $path)
+        ]);
+    }
+
+    return response()->json(['success' => false], 400);
+}
+
+
+
+
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [

@@ -134,7 +134,7 @@
 
                     <!-- Link a registro -->
                     <div class="text-center">
-                        <a href="" 
+                        <a href="{{ route('register') }}" 
                            class="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-300">
                             <i class="fas fa-user-plus mr-2"></i>Crear cuenta personal
                         </a>
