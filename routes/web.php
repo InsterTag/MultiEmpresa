@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProfileController;
-
-
+use App\Http\Controllers\Auth\CompanyAuthController;
 //rutas vistas individuales
 
 //home
@@ -16,6 +15,11 @@ Route::get('/', function () {
 Route::get('/productos', function () {
     return view('products.products');
 })->name('productos');
+
+//superAdmin
+Route::get('/superAdmin', function () {
+    return view('profiles.admin.admin');
+})->name('superAdmin');
 
 
 
@@ -45,10 +49,10 @@ Route::get('/company', function () {
 })->name('company');
 });
 // // === Empresa ===
-// Route::get('/login/company', [CompanyAuthController::class, 'showLoginForm'])->name('login.company');
-// Route::get('/register/company', [CompanyAuthController::class, 'showRegisterForm'])->name('register.company');
-// Route::post('/login/company', [CompanyAuthController::class, 'login']);
-// Route::post('/register/company', [CompanyAuthController::class, 'register']);
+Route::get('/login/company', [CompanyAuthController::class, 'showLoginForm'])->name('login.company');
+Route::get('/register/company', [CompanyAuthController::class, 'showRegisterForm'])->name('register.company');
+Route::post('/login/company', [CompanyAuthController::class, 'login']);
+Route::post('/register/company', [CompanyAuthController::class, 'register']);
 
 // Logout (puedes reutilizar uno solo)
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

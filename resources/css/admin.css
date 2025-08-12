@@ -1,0 +1,71 @@
+
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f59e0b;
+            --accent-color: #10b981;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --background-light: #f8fafc;
+            --background-white: #ffffff;
+            --border-color: #e5e7eb;
+            --hover-bg: #eff6ff;
+        }
+
+        .custom-primary { color: var(--primary-color); }
+        .custom-primary-bg { background-color: var(--primary-color); }
+        .custom-primary-dark-bg { background-color: var(--primary-dark); }
+        .custom-secondary { color: var(--secondary-color); }
+        .custom-accent { color: var(--accent-color); }
+        .custom-text-primary { color: var(--text-primary); }
+        .custom-text-secondary { color: var(--text-secondary); }
+        .custom-bg-light { background-color: var(--background-light); }
+        .custom-bg-white { background-color: var(--background-white); }
+        .custom-border { border-color: var(--border-color); }
+        .custom-hover-bg { background-color: var(--hover-bg); }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .hover-scale {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .active-tab {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .inactive-tab {
+            background-color: var(--background-white);
+            color: var(--text-secondary);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+        }
