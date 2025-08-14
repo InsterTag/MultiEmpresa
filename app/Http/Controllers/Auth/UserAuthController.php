@@ -26,7 +26,7 @@ class UserAuthController extends Controller
         $credentials['role'] = 'user';
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard'); // Cambia por tu ruta deseada
+            return redirect()->route('home'); // Cambia por tu ruta deseada
         }
 
         return back()->withErrors(['email' => 'Credenciales inválidas'])->withInput();

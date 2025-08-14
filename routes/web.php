@@ -21,6 +21,10 @@ Route::get('/superAdmin', function () {
     return view('profiles.admin.admin');
 })->name('superAdmin');
 
+//superAdmin
+Route::get('/empresa', function () {
+    return view('profiles.company.company');
+})->name('empresa');
 
 
 
