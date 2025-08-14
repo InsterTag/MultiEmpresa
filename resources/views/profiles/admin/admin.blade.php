@@ -22,21 +22,39 @@
     <!-- register company  -->
 <div id="createCompanyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
     <div class="custom-bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto slide-in">
+        <!-- HEADER -->
         <div class="sticky top-0 custom-bg-white rounded-t-lg border-b border-gray-200 p-6 pb-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-semibold custom-text-primary">Crear Nueva Empresa</h3>
-                <!-- X de cierre mejorada -->
-                <button onclick="closeCreateCompanyModal()" class="p-2 custom-hover-bg rounded-full transition-all hover:bg-gray-100 hover:scale-110" title="Cerrar">
+                <div class="flex items-center space-x-4">
+                    <h3 id="modalTitle" class="text-lg font-semibold custom-text-primary">Registro Usuario</h3>
+                    <!-- Stepper indicator -->
+                    <div class="flex items-center space-x-2">
+                        <span id="step1Indicator" class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold">1</span>
+                        <span class="text-gray-400">→</span>
+                        <span id="step2Indicator" class="flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-600 text-xs font-bold">2</span>
+                    </div>
+                </div>
+                <button onclick="closeCreateCompanyModal()" class="p-2 rounded-full hover:bg-gray-100">
                     <i data-lucide="x" class="w-6 h-6 custom-text-secondary"></i>
                 </button>
             </div>
         </div>
-                      
-        <div class="p-6 pt-4">
-            @include('auth.company.register')
-        </div>
+
+        <form id="companyRegistrationForm" method="POST" action="{{ route('register.company') }}" class="space-y-6">
+            @csrf
+            <!-- STEP 1: Usuario -->
+            <div id="stepUser" class="p-6 pt-4">
+                @include('auth.company.user')
+            </div>
+
+            <!-- STEP 2: Empresa -->
+            <div id="stepCompany" class="p-6 pt-4 hidden">
+                @include('auth.company.register')
+            </div>
+        </form>
     </div>
 </div>
+
     </div>
     <script>
         
@@ -265,7 +283,133 @@
             scrollToTop();
         };
 
+//     function goToCompanyStep() {
+//     document.getElementById('stepUser').classList.add('hidden');
+//     document.getElementById('stepCompany').classList.remove('hidden');
+//     document.getElementById('modalTitle').innerText = "Registro Empresa";
+// }
 
-    </script>
+// function goToUserStep() {
+//     document.getElementById('stepCompany').classList.add('hidden');
+//     document.getElementById('stepUser').classList.remove('hidden');
+//     document.getElementById('modalTitle').innerText = "Registro Usuario";
+// }
+
+
+// Función para avanzar al paso de empresa
+function goToCompanyStep() {
+    // Validar el formulario de usuario
+    const userFormValid = validateUserForm();
+    
+    if(userFormValid) {
+        // Ocultar paso de usuario y mostrar paso de empresa
+        document.getElementById('stepUser').classList.add('hidden');
+        document.getElementById('stepCompany').classList.remove('hidden');
+        
+        // Actualizar indicadores de pasos
+        document.getElementById('step1Indicator').classList.remove('bg-blue-600', 'text-white');
+        document.getElementById('step1Indicator').classList.add('bg-green-500', 'text-white');
+        document.getElementById('step2Indicator').classList.remove('bg-gray-200', 'text-gray-600');
+        document.getElementById('step2Indicator').classList.add('bg-blue-600', 'text-white');
+        
+        // Actualizar título del modal
+        document.getElementById('modalTitle').innerText = "Registro Empresa";
+    }
+}
+
+// Función para retroceder al paso de usuario
+function goToUserStep() {
+    document.getElementById('stepCompany').classList.add('hidden');
+    document.getElementById('stepUser').classList.remove('hidden');
+    
+    // Actualizar indicadores de pasos
+    document.getElementById('step1Indicator').classList.add('bg-blue-600', 'text-white');
+    document.getElementById('step1Indicator').classList.remove('bg-green-500', 'text-white');
+    document.getElementById('step2Indicator').classList.add('bg-gray-200', 'text-gray-600');
+    document.getElementById('step2Indicator').classList.remove('bg-blue-600', 'text-white');
+    
+    // Actualizar título del modal
+    document.getElementById('modalTitle').innerText = "Registro Usuario";
+}
+
+// Función para validar el formulario de usuario
+function validateUserForm() {
+    const form = document.getElementById('companyRegistrationForm');
+    const name = form.querySelector('input[name="user_name"]');
+    const email = form.querySelector('input[name="user_email"]');
+    const password = form.querySelector('input[name="user_password"]');
+    const passwordConfirmation = form.querySelector('input[name="user_password_confirmation"]');
+    
+    // Resetear errores
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    document.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+    
+    let isValid = true;
+    
+    // Validar nombre
+    if (!name.value.trim()) {
+        showFieldError(name, 'El nombre es requerido');
+        isValid = false;
+    }
+    
+    // Validar email
+    if (!email.value.trim()) {
+        showFieldError(email, 'El email es requerido');
+        isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        showFieldError(email, 'Ingrese un email válido');
+        isValid = false;
+    }
+    
+    // Validar contraseña
+    if (!password.value) {
+        showFieldError(password, 'La contraseña es requerida');
+        isValid = false;
+    } else if (password.value.length < 8) {
+        showFieldError(password, 'La contraseña debe tener al menos 8 caracteres');
+        isValid = false;
+    }
+    
+    // Validar confirmación de contraseña
+    if (password.value !== passwordConfirmation.value) {
+        showFieldError(passwordConfirmation, 'Las contraseñas no coinciden');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+// Función para mostrar errores en campos
+function showFieldError(field, message) {
+    field.classList.add('border-red-500');
+    const errorElement = document.createElement('p');
+    errorElement.className = 'mt-1 text-sm text-red-600 error-message';
+    errorElement.textContent = message;
+    field.parentNode.insertBefore(errorElement, field.nextSibling);
+}
+
+// Cerrar modal y resetear formulario
+function closeCreateCompanyModal() {
+    document.getElementById('createCompanyModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+    document.getElementById('companyRegistrationForm').reset();
+    
+    // Resetear pasos
+    document.getElementById('stepCompany').classList.add('hidden');
+    document.getElementById('stepUser').classList.remove('hidden');
+    document.getElementById('modalTitle').innerText = "Registro Usuario";
+    
+    // Resetear indicadores
+    document.getElementById('step1Indicator').classList.add('bg-blue-600', 'text-white');
+    document.getElementById('step1Indicator').classList.remove('bg-green-500');
+    document.getElementById('step2Indicator').classList.add('bg-gray-200', 'text-gray-600');
+    document.getElementById('step2Indicator').classList.remove('bg-blue-600', 'text-white');
+    
+    // Limpiar errores
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    document.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+}
+
+</script>
 </body>
 </html>

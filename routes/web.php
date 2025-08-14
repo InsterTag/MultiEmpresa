@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\CompanyAuthController;
-//rutas vistas individuales
 
 //home
 Route::get('/', function () {
@@ -15,12 +16,6 @@ Route::get('/', function () {
 Route::get('/productos', function () {
     return view('products.products');
 })->name('productos');
-
-//superAdmin
-Route::get('/superAdmin', function () {
-    return view('profiles.admin.admin');
-})->name('superAdmin');
-
 
 
 
@@ -56,3 +51,13 @@ Route::post('/register/company', [CompanyAuthController::class, 'register']);
 
 // Logout (puedes reutilizar uno solo)
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+
+// === Rutas de SuperAdmin ===
+Route::get('/superAdmin', function () {return view('profiles.admin.admin');})->name('superAdmin');
+
+//creacion empresas
+Route::post('/register-company', [CompanyController::class, 'store'])->name('register.company');
+Route::get('/superAdmin', [AdminController::class, 'showCompanies'])->name('superAdmin');

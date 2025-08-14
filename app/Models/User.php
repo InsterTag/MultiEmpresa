@@ -32,8 +32,8 @@ class User extends Authenticatable
                 ->withTimestamps();
     }
 
-    public function company() {
-        return $this->hasOne(Company::class);
+    public function companies() {
+        return $this->hasMany(Company::class);
     }
 
     public function carts() {
