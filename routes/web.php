@@ -24,7 +24,7 @@ Route::get('/superAdmin', function () {
 
 
 Route::get('/dashboard', function () {
-    return view('profiles.company.items.dashboard.dashboard');
+    return view('profiles.company.dashboard.dashboard');
 })->name('dashboard');
 
 
