@@ -1,3 +1,5 @@
+@extends('layouts.company')
+@section('content')
 <!-- Branches Management Component -->
 <div id="branches" class="tab-content">
     <!-- Header Section -->
@@ -430,3 +432,4 @@
         </div>
     </div>
 </div>
+@endsection

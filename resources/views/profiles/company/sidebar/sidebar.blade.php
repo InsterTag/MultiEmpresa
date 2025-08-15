@@ -20,32 +20,32 @@
                     <span>Dashboard</span>
                 </a>
                 
-                <a href="company-info.html" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
+                <a href="{{route('generalInformation')}}" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
                     <i class="fas fa-building w-5 mr-3"></i>
                     <span>Información General</span>
                 </a>
                 
-                <a href="branches.html" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
+                <a href="{{route('branches')}}" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
                     <i class="fas fa-map-marker-alt w-5 mr-3"></i>
                     <span>Sucursales</span>
                 </a>
                 
-                <a href="employees.html" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
+                <a href="{{route('employees')}}" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
                     <i class="fas fa-users w-5 mr-3"></i>
                     <span>Empleados</span>
                 </a>
                 
-                <a href="products.html" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
+                <a href="{{route('productsection')}}" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
                     <i class="fas fa-box w-5 mr-3"></i>
                     <span>Productos</span>
                 </a>
                 
-                <a href="analytics.html" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
+                <a href="{{route('analysis')}}" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
                     <i class="fas fa-chart-pie w-5 mr-3"></i>
                     <span>Análisis Avanzado</span>
                 </a>
                 
-                <a href="settings.html" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
+                <a href="{{route('analysis')}}" class="nav-link flex items-center p-3 rounded-lg text-gray-800 hover:text-primary transition-colors">
                     <i class="fas fa-cog w-5 mr-3"></i>
                     <span>Configuración</span>
                 </a>

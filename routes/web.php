@@ -22,10 +22,33 @@ Route::get('/superAdmin', function () {
 })->name('superAdmin');
 
 
-
+//rutas de vistas empresa
 Route::get('/dashboard', function () {
     return view('profiles.company.dashboard.dashboard');
 })->name('dashboard');
+
+Route::get('/analysis', function () {
+    return view('profiles.company.analysis.analysis');
+})->name('analysis');
+
+Route::get('/branches', function () {
+    return view('profiles.company.branches.branches');
+})->name('branches');
+
+Route::get('/employees', function () {
+    return view('profiles.company.employees.employees');
+})->name('employees');
+
+Route::get('/generalInformation', function () {
+    return view('profiles.company.generalInformation.generalInformation');
+})->name('generalInformation');
+
+Route::get('/productsection', function () {
+    return view('profiles.company.productsection.productsSection');
+})->name('productsection');
+
+
+
 
 
 

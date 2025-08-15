@@ -38,7 +38,7 @@
 
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        @include('profiles.company.sidebar')
+        @include('profiles.company.sidebar.sidebar')
   
             @yield('content')
 
