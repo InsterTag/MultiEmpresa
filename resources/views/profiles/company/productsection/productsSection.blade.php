@@ -132,161 +132,199 @@
                                     <th class="text-left py-3 px-4 font-semibold text-gray-800">Acciones</th>
                                 </tr>
                             </thead>
+
+
+
                             <tbody>
-                                <tr class="border-b border-gray-200 hover:bg-white/30 transition-colors">
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            <img src="https://via.placeholder.com/50x50/3b82f6/ffffff?text=IMG" alt="Producto" class="w-12 h-12 rounded-lg mr-3">
-                                            <div>
-                                                <h4 class="font-semibold text-gray-800">iPhone 14 Pro Max</h4>
-                                                <p class="text-sm text-gray-600 hidden sm:block">256GB - Color Morado</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-4 text-gray-600 hidden md:table-cell">IPH14PM-256-MOR</td>
-                                    <td class="py-4 px-4 text-gray-600 hidden lg:table-cell">Electrónicos</td>
-                                    <td class="py-4 px-4 font-semibold text-gray-800">$1,299.99</td>
-                                    <td class="py-4 px-4 text-gray-600 hidden sm:table-cell">24</td>
-                                    <td class="py-4 px-4">
-                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">En Stock</span>
-                                    </td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors" title="Ver">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="p-2 text-yellow-600 hover:bg-yellow-100 rounded-lg transition-colors" title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors hidden sm:block" title="Eliminar">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-b border-gray-200 hover:bg-white/30 transition-colors">
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            <img src="https://via.placeholder.com/50x50/ef4444/ffffff?text=IMG" alt="Producto" class="w-12 h-12 rounded-lg mr-3">
-                                            <div>
-                                                <h4 class="font-semibold text-gray-800">MacBook Pro M2</h4>
-                                                <p class="text-sm text-gray-600 hidden sm:block">13" - 8GB RAM 256GB SSD</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-4 text-gray-600 hidden md:table-cell">MBP13-M2-256</td>
-                                    <td class="py-4 px-4 text-gray-600 hidden lg:table-cell">Electrónicos</td>
-                                    <td class="py-4 px-4 font-semibold text-gray-800">$1,799.99</td>
-                                    <td class="py-4 px-4 text-gray-600 hidden sm:table-cell">5</td>
-                                    <td class="py-4 px-4">
-                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Stock Bajo</span>
-                                    </td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors" title="Ver">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="p-2 text-yellow-600 hover:bg-yellow-100 rounded-lg transition-colors" title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors hidden sm:block" title="Eliminar">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+    @foreach($products as $product)
+        <tr class="border-b border-gray-200 hover:bg-white/30 transition-colors">
+            <td class="py-4 px-4">
+                <div class="flex items-center">
+                    @if($product->media)
+                        <img src="{{ asset('storage/' . $product->media) }}" alt="{{ $product->name }}" class="w-12 h-12 rounded-lg mr-3">
+                    @else
+                        <img src="https://via.placeholder.com/50x50/3b82f6/ffffff?text=IMG" alt="Producto" class="w-12 h-12 rounded-lg mr-3">
+                    @endif
+                    <div>
+                        <h4 class="font-semibold text-gray-800">{{ $product->name }}</h4>
+                        <p class="text-sm text-gray-600 hidden sm:block">{{ $product->description }}</p>
                     </div>
+                </div>
+            </td>
+            <td class="py-4 px-4 text-gray-600 hidden md:table-cell">{{ $product->barcode ?? '-' }}</td>
+            <td class="py-4 px-4 text-gray-600 hidden lg:table-cell">{{ $product->category ?? 'General' }}</td>
+            <td class="py-4 px-4 font-semibold text-gray-800">${{ number_format($product->unit_price, 2) }}</td>
+            <td class="py-4 px-4 text-gray-600 hidden sm:table-cell">
+                {{ $product->stock ?? '0' }}
+            </td>
+            <td class="py-4 px-4">
+                @if($product->state === 'available')
+                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">En Stock</span>
+                @else
+                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">No Disponible</span>
+                @endif
+            </td>
+            <td class="py-4 px-4">
+                <div class="flex gap-2">
+                    <a href="{{ route('products.show', $product->id) }}" class="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors" title="Ver">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="{{ route('products.edit', $product->id) }}" class="p-2 text-yellow-600 hover:bg-yellow-100 rounded-lg transition-colors" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline-block delete-product-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors hidden sm:block" title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                    </button>
+                    </form>
+
+                </div>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+
+
+
+
+</table>
+</div>
 
                     <!-- Pagination -->
                     <div class="flex flex-col lg:flex-row justify-between items-center mt-6 pt-6 border-t border-gray-200">
-                        <p class="text-gray-600 text-sm mb-4 lg:mb-0">Mostrando 1-10 de 156 productos</p>
-                        <div class="flex gap-2">
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="px-3 py-2 bg-primary text-white rounded-lg">1</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">2</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">3</button>
-                            <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
+                    <!-- Contador -->
+                    <p class="text-gray-600 text-sm mb-4 lg:mb-0">
+                        Mostrando {{ $products->firstItem() }}-{{ $products->lastItem() }} de {{ $products->total() }} productos
+                    </p>
+                    
+                    <!-- Botones de paginación -->
+                    <div class="flex gap-2">
+                        @if($products->onFirstPage())
+                        <span class="px-3 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                        @else
+                        <a href="{{ $products->previousPageUrl() }}" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        @endif
+                        
+                        @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                        @if($page == $products->currentPage())
+                        <span class="px-3 py-2 bg-primary text-white rounded-lg">{{ $page }}</span>
+                        @else
+                        <a href="{{ $url }}" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">{{ $page }}</a>
+                        @endif
+                        @endforeach
+                        
+                        @if($products->hasMorePages())
+                        <a href="{{ $products->nextPageUrl() }}" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                        @else
+                        <span class="px-3 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                        @endif
                     </div>
                 </div>
+                
             </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
 
             <!-- Add Product Section -->
-            <div id="add-product" class="section-content hidden">
-                <div class="glass-effect rounded-2xl p-6 animate-fade-in">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Agregar Nuevo Producto</h2>
-                    
-                    <form class="space-y-6">
-                        <!-- Basic Info -->
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-800 mb-2">Nombre del Producto *</label>
-                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ingrese el nombre del producto">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-800 mb-2">SKU *</label>
-                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Código único del producto">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-800 mb-2">Categoría *</label>
-                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option>Seleccionar categoría</option>
-                                    <option>Electrónicos</option>
-                                    <option>Ropa</option>
-                                    <option>Hogar</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-800 mb-2">Precio *</label>
-                                <div class="relative">
-                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                                    <input type="number" class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0.00">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-800 mb-2">Stock Inicial *</label>
-                                <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-800 mb-2">Descripción</label>
-                            <textarea rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Descripción detallada del producto"></textarea>
-                        </div>
-
-                        <!-- Image Upload -->
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-800 mb-2">Imágenes del Producto</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
-                                <p class="text-gray-600 mb-2">Arrastra y suelta las imágenes aquí o</p>
-                                <button type="button" class="bg-primary text-white px-4 py-2 rounded-lg">Seleccionar Archivos</button>
-                            </div>
-                        </div>
-
-                        <!-- Form Actions -->
-                        <div class="flex flex-col sm:flex-row gap-4 pt-6">
-                            <button type="submit" class="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg transition-colors">
-                                <i class="fas fa-save mr-2"></i>
-                                Guardar Producto
-                            </button>
-                            <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg transition-colors">
-                                <i class="fas fa-times mr-2"></i>
-                                Cancelar
-                            </button>
-                        </div>
-                    </form>
+<div id="add-product" class="section-content hidden">
+    <div class="glass-effect rounded-2xl p-6 animate-fade-in">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Agregar Nuevo Producto</h2>
+        
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            @csrf
+            <!-- Basic Info -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Nombre del Producto *</label>
+                    <input type="text" name="name" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="Ingrese el nombre del producto">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Código de Barras</label>
+                    <input type="text" name="barcode"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="Código único del producto">
                 </div>
             </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Precio *</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
+                    <input type="number" name="unit_price" required step="0.01" min="0" max="99999999.99"
+                    class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="0.00">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Estado *</label>
+                    <select name="state" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="available">Disponible</option>
+                        <option value="unavailable">No disponible</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-800 mb-2">Descripción</label>
+                <textarea name="description" rows="4"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Descripción detallada del producto"></textarea>
+            </div>
+
+            <!-- Image Upload -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-800 mb-2">Imagen del Producto</label>
+                <input type="file" name="media" accept="image/*"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                <button type="submit"
+                    class="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg transition-colors">
+                    <i class="fas fa-save mr-2"></i>
+                    Guardar Producto
+                </button>
+                <button type="reset"
+                    class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg transition-colors">
+                    <i class="fas fa-times mr-2"></i>
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
 
             <!-- Categories Section -->
             <div id="categories" class="section-content hidden">
@@ -442,5 +480,17 @@
                     lastUpdateEl.textContent = timeString;
                 }
             });
+
+                // Seleccionamos todos los formularios con la clase delete-product-form
+    document.querySelectorAll('.delete-product-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita el envío inmediato
+            const confirmed = confirm('¿Estás seguro de que deseas eliminar este producto?');
+            if (confirmed) {
+                form.submit(); // Si confirma, enviamos el formulario
+            }
+        });
+    });
+
         </script>
 @endsection

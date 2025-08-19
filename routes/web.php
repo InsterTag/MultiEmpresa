@@ -7,6 +7,8 @@
     use App\Http\Controllers\AdminController;
     use App\Http\Controllers\Auth\CompanyAuthController;
     use App\Http\Controllers\PaymentCardController;
+    use App\Http\Controllers\ProductController;
+
 
     //home
     Route::get('/', function () {
@@ -42,9 +44,7 @@
         return view('profiles.company.generalInformation.generalInformation');
     })->name('generalInformation');
 
-    Route::get('/productsection', function () {
-        return view('profiles.company.productsection.productsSection');
-    })->name('productsection');
+    Route::get('/productsection', [ProductController::class, 'index'])->name('productsection');
 
 
 
@@ -54,37 +54,44 @@
     Route::post('/login', [AuthController::class, 'LoginRequest'])->name('login');
     Route::get('/register', [AuthController::class, 'register'])->name('register.form');
     Route::post('/register', [AuthController::class, 'store'])->name('register');
-    Route::get('/products', function () {return view('products');})->name('products');
-
-
-
-
+    
+    
+    
+    
     Route::middleware('auth')->group(function () {
         Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
         Route::get('/profile', function () {$cards = Auth::user()->paymentCards()->latest()->get();return view('profiles.user.profile', compact('cards'));})->name('profile');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profile.uploadImage');
-
+        
         Route::get('/profile/payments', [PaymentCardController::class, 'index'])->name('payments.index');
         Route::post('/payments', [PaymentCardController::class, 'store'])->name('payments.store');
         Route::delete('/payments/{card}', [PaymentCardController::class, 'destroy'])->name('payments.destroy');
-
-
-
+        
+        
+        
     });
-
+    
     
     // Logout (puedes reutilizar uno solo)
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
-
+    
+    
+    
+    
     // === Rutas de SuperAdmin ===
     Route::get('/superAdmin', function () {return view('profiles.admin.admin');})->name('superAdmin');
-
+    
     //creacion empresas
     Route::post('/register-company', [CompanyController::class, 'store'])->name('register.company');
     Route::get('/superAdmin', [AdminController::class, 'showCompaniesAndUsers'])->name('superAdmin');
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    Route::resource('products', ProductController::class);
+    Route::get('/products', function () {return view('products');})->name('products');
