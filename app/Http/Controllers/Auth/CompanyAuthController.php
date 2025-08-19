@@ -49,7 +49,7 @@ class CompanyAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     }
 
     public function logout()
