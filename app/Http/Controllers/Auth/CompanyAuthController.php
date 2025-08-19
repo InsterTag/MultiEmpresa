@@ -10,26 +10,9 @@ use Illuminate\Http\Request;
 
 class CompanyAuthController extends Controller
 {
-    public function showLoginForm()
-    {
-        return view('auth.company.login');
-    }
-
     public function showRegisterForm()
     {
         return view('auth.company.register');
-    }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        $credentials['role'] = 'company';
-
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard'); // Cambia por tu ruta deseada
-        }
-
-        return back()->withErrors(['email' => 'Credenciales inválidas'])->withInput();
     }
 
     public function register(Request $request)
@@ -50,11 +33,5 @@ class CompanyAuthController extends Controller
         Auth::login($user);
 
         return redirect()->route('home');
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-        return redirect('/');
     }
 }

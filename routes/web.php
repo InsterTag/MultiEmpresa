@@ -1,97 +1,90 @@
-<?php
+    <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\CompanyAuthController;
-use App\Http\Controllers\PaymentCardController;
+    use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\Auth\AuthController;
+    use App\Http\Controllers\ProfileController;
+    use App\Http\Controllers\CompanyController;
+    use App\Http\Controllers\AdminController;
+    use App\Http\Controllers\Auth\CompanyAuthController;
+    use App\Http\Controllers\PaymentCardController;
 
-//home
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+    //home
+    Route::get('/', function () {
+        return view('home');
+    })->name('home');
 
-//products
-Route::get('/productos', function () {
-    return view('products.products');
-})->name('productos');
-
-
-
-
-//rutas de vistas empresa
-Route::get('/dashboard', function () {
-    return view('profiles.company.dashboard.dashboard');
-})->name('dashboard');
-
-Route::get('/analysis', function () {
-    return view('profiles.company.analysis.analysis');
-})->name('analysis');
-
-Route::get('/branches', function () {
-    return view('profiles.company.branches.branches');
-})->name('branches');
-
-Route::get('/employees', function () {
-    return view('profiles.company.employees.employees');
-})->name('employees');
-
-Route::get('/generalInformation', function () {
-    return view('profiles.company.generalInformation.generalInformation');
-})->name('generalInformation');
-
-Route::get('/productsection', function () {
-    return view('profiles.company.productsection.productsSection');
-})->name('productsection');
+    //products
+    Route::get('/productos', function () {
+        return view('products.products');
+    })->name('productos');
 
 
 
 
-// === Register y Login ===
-Route::get('/login', [AuthController::class, 'login'])->name('login.form');
-Route::post('/login', [AuthController::class, 'LoginRequest'])->name('login');
-Route::get('/register', [AuthController::class, 'register'])->name('register.form');
-Route::post('/register', [AuthController::class, 'store'])->name('register');
-Route::get('/products', function () {return view('products');})->name('products');
+    //rutas de vistas empresa
+    Route::get('/dashboard', function () {
+        return view('profiles.company.dashboard.dashboard');
+    })->name('dashboard');
+
+    Route::get('/analysis', function () {
+        return view('profiles.company.analysis.analysis');
+    })->name('analysis');
+
+    Route::get('/branches', function () {
+        return view('profiles.company.branches.branches');
+    })->name('branches');
+
+    Route::get('/employees', function () {
+        return view('profiles.company.employees.employees');
+    })->name('employees');
+
+    Route::get('/generalInformation', function () {
+        return view('profiles.company.generalInformation.generalInformation');
+    })->name('generalInformation');
+
+    Route::get('/productsection', function () {
+        return view('profiles.company.productsection.productsSection');
+    })->name('productsection');
 
 
 
 
-Route::middleware('auth')->group(function () {
-    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
-    Route::get('/profile', function () {$cards = Auth::user()->paymentCards()->latest()->get();return view('profiles.user.profile', compact('cards'));})->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profile.uploadImage');
-
-    Route::get('/profile/payments', [PaymentCardController::class, 'index'])->name('payments.index');
-    Route::post('/payments', [PaymentCardController::class, 'store'])->name('payments.store');
-    Route::delete('/payments/{card}', [PaymentCardController::class, 'destroy'])->name('payments.destroy');
-
-
-//empresas
-Route::get('/company', function () {
-    return view('profiles.company');
-})->name('company');
-});
-// // === Empresa ===
-Route::get('/login/company', [CompanyAuthController::class, 'showLoginForm'])->name('login.company');
-Route::get('/register/company', [CompanyAuthController::class, 'showRegisterForm'])->name('register.company');
-Route::post('/login/company', [CompanyAuthController::class, 'login']);
-Route::post('/register/company', [CompanyAuthController::class, 'register']);
-
-// Logout (puedes reutilizar uno solo)
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    // === Register y Login ===
+    Route::get('/login', [AuthController::class, 'login'])->name('login.form');
+    Route::post('/login', [AuthController::class, 'LoginRequest'])->name('login');
+    Route::get('/register', [AuthController::class, 'register'])->name('register.form');
+    Route::post('/register', [AuthController::class, 'store'])->name('register');
+    Route::get('/products', function () {return view('products');})->name('products');
 
 
 
 
-// === Rutas de SuperAdmin ===
-Route::get('/superAdmin', function () {return view('profiles.admin.admin');})->name('superAdmin');
+    Route::middleware('auth')->group(function () {
+        Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
+        Route::get('/profile', function () {$cards = Auth::user()->paymentCards()->latest()->get();return view('profiles.user.profile', compact('cards'));})->name('profile');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profile.uploadImage');
 
-//creacion empresas
-Route::post('/register-company', [CompanyController::class, 'store'])->name('register.company');
-Route::get('/superAdmin', [AdminController::class, 'showCompaniesAndUsers'])->name('superAdmin');
+        Route::get('/profile/payments', [PaymentCardController::class, 'index'])->name('payments.index');
+        Route::post('/payments', [PaymentCardController::class, 'store'])->name('payments.store');
+        Route::delete('/payments/{card}', [PaymentCardController::class, 'destroy'])->name('payments.destroy');
+
+
+
+    });
+
+    
+    // Logout (puedes reutilizar uno solo)
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+
+    // === Rutas de SuperAdmin ===
+    Route::get('/superAdmin', function () {return view('profiles.admin.admin');})->name('superAdmin');
+
+    //creacion empresas
+    Route::post('/register-company', [CompanyController::class, 'store'])->name('register.company');
+    Route::get('/superAdmin', [AdminController::class, 'showCompaniesAndUsers'])->name('superAdmin');
 
 
