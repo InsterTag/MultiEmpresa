@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\CompanyAuthController;
+use App\Http\Controllers\PaymentCardController;
 
 //home
 Route::get('/', function () {
@@ -65,10 +66,13 @@ Route::get('/products', function () {return view('products');})->name('products'
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
-    Route::get('/profile', function () {return view('profiles.user.profile');})->name('profile');
+    Route::get('/profile', function () {$cards = Auth::user()->paymentCards()->latest()->get();return view('profiles.user.profile', compact('cards'));})->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profile.uploadImage');
 
+    Route::get('/profile/payments', [PaymentCardController::class, 'index'])->name('payments.index');
+    Route::post('/payments', [PaymentCardController::class, 'store'])->name('payments.store');
+    Route::delete('/payments/{card}', [PaymentCardController::class, 'destroy'])->name('payments.destroy');
 
 
 //empresas
@@ -94,3 +98,6 @@ Route::get('/superAdmin', function () {return view('profiles.admin.admin');})->n
 //creacion empresas
 Route::post('/register-company', [CompanyController::class, 'store'])->name('register.company');
 Route::get('/superAdmin', [AdminController::class, 'showCompanies'])->name('superAdmin');
+
+
+
