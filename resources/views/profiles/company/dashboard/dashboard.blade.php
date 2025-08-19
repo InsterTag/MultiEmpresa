@@ -1,7 +1,7 @@
 @extends('layouts.company')
 @section('content')
         <!-- Main Content -->
-        <div class="flex-1 lg:ml-0 p-6">
+        <div class="flex-1 lg:ml-0 p-10">
             <!-- Header -->
             <div class="glass-effect rounded-2xl p-6 mb-6 animate-fade-in">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center">
