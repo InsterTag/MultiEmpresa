@@ -280,10 +280,11 @@
                     </div>
                 @endauth
                 <!-- Carrito de compras -->
+                <a href="{{route('carritodecompras')}}">
                 <button class="navbar-button relative p-2 custom-text-primary hover:custom-primary">
                     <i class="fas fa-shopping-cart text-lg"></i>
-                    <span class="cart-badge absolute -top-1 -right-1 custom-primary-bg text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">3</span>
                 </button>
+                </a>
             </div>
 
             <!-- Botón menú móvil -->

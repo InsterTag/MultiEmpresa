@@ -18,6 +18,10 @@
         return view('products.products');
     })->name('productos');
 
+    //shoppintcart
+    Route::get('/shoppingcart', function () {
+        return view('shoppingcart.shoppingcart');
+    })->name('carritodecompras');
 
 
 
