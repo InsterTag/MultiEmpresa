@@ -43,7 +43,7 @@ class AuthController extends Controller
 
     switch ($role) {
         case 'client':
-            return redirect()->route('home');
+            return redirect()->route('productos');
         case 'company':
             return redirect()->route('dashboard');
         case 'admin':
