@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('payment_cards', function (Blueprint $table) {
             $table->id();
-            $table->string('card_number');
-            $table->string('holder_name');
-            $table->string('expiry');
-            $table->string('cvv');
-            $table->string('card_type');
-            $table->decimal('balance', 12, 2)->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('card_number');
+            $table->string('holder_name', 255);
+            $table->string('expiry');
+            $table->text('cvv', 3);
+            $table->string('card_type', 20);
+            $table->decimal('balance', 12, 2)->default(0);
             $table->timestamps();
+
+            $table->index('user_id');
+            $table->index('card_type');
         });
     }
 

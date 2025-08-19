@@ -29,13 +29,29 @@ class AuthController extends Controller
     }
 
     public function loginRequest(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
+{
+    $request->authenticate();
+    $request->session()->regenerate();
 
-        $request->session()->regenerate();
+    $user = auth()->user();
 
-        return redirect()->intended(route('home', absolute: false));
+    if (!$user) {
+        return redirect()->route('login')->withErrors(['email' => 'Error al autenticar']);
     }
+
+    $role = $user->roles()->pluck('name')->first();
+
+    switch ($role) {
+        case 'client':
+            return redirect()->route('home');
+        case 'company':
+            return redirect()->route('dashboard');
+        case 'superadmin':
+            return redirect()->route('superAdmin');
+        default:
+            return redirect()->route('home');
+    }
+}
     
     public function store(Request $request): RedirectResponse
     {

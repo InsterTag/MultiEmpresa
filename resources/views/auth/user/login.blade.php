@@ -28,7 +28,7 @@
 
             <!-- Formulario -->
             <div class="bg-white rounded-2xl shadow-xl p-8">
-                <form method="POST" action="" class="space-y-6">
+                <form method="POST" action="{{ route('login') }}" class="space-y-6">
                     @csrf
                     
                     <!-- Campo oculto para indicar tipo de usuario -->
