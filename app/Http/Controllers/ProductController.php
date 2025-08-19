@@ -4,37 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-{
-    $products = Product::all(); // Obtiene todos los productos de la base de datos
-    $categories = Category::all()->pluck('name', 'id'); // Para las categorías
-    
-    return view('tu_vista', [
-        'products' => $products,
-        'categories' => $categories
-    ]);
-}
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
     {
-        //
+        $products = Product::paginate(10); // 10 productos por página
+        return view('profiles.company.productsection.productsSection', compact('products'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+        public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'barcode'     => 'nullable|string|max:255',
+            'unit_price'  => 'required|numeric|min:0',
+            'state'       => 'required|in:available,unavailable',
+            'media'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Aquí asumimos que el branch viene del usuario logueado
+        $branchId = Auth::user()->branch_id ?? 1; // cámbialo según tu lógica
+
+        $product = new Product();
+        $product->branch_id   = $branchId;
+        $product->name        = $request->name;
+        $product->description = $request->description;
+        $product->barcode     = $request->barcode;
+        $product->unit_price  = $request->unit_price;
+        $product->state       = $request->state;
+
+        // Guardar imagen si se sube
+        if ($request->hasFile('media')) {
+            $path = $request->file('media')->store('products', 'public');
+            $product->media = $path; // Guardamos la ruta
+        }
+
+        $product->save();
+
+        return redirect()->back()->with('success', 'Producto agregado correctamente.');
     }
 
     /**
@@ -61,11 +75,16 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Product $product)
     {
-        //
+        // Si el producto tiene imagen, la eliminamos del storage
+        if ($product->media) {
+            Storage::disk('public')->delete($product->media);
+        }
+
+        // Eliminamos el producto de la base de datos
+        $product->delete();
+
+        return redirect()->back()->with('success', 'Producto eliminado correctamente.');
     }
 }
