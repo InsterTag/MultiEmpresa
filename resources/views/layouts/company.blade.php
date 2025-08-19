@@ -31,7 +31,7 @@
         }
     </script>
 </head>
-<body class="min-h-screen bg-gray-50">
+<body class="min-h-screen">
     <!-- Mobile Menu Button -->
     <button id="mobileMenuBtn" class="lg:hidden fixed top-4 left-4 z-50 glass-effect rounded-lg p-3 shadow-lg bg-white">
         <i class="fas fa-bars text-gray-700"></i>
@@ -43,15 +43,8 @@
         
         <!-- Main Content Area -->
         <main class="flex-1 lg:ml-64">
-            <!-- Header/Top Bar -->
-            <div>
-                <div class="px-4 py-3 lg:px-6 lg:py-4">
-                    <!-- Aquí puedes agregar breadcrumbs, título de página, etc. -->
-                </div>
-            </div>
-            
             <!-- Content Container -->
-            <div >
+            <div class="pt-6 px-6 pl-8 lg:pt-8 lg:px-8 lg:pl-12 min-h-screen">
                 <div class="max-w-7xl mx-auto">
                     @yield('content')
                 </div>
