@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+
 use App\Models\{Role, User, Company, Branch, Warehouse, Category, Characteristic, Product, Stock, Cart, CartProduct, Order, OrderProduct, Invoice, InvoiceItem, PaymentCard, Review, PurchaseRequest, CharacteristicCategoryProduct};
 
 class DatabaseSeeder extends Seeder
@@ -41,5 +42,8 @@ class DatabaseSeeder extends Seeder
         Review::factory()->count(20)->create();
         PurchaseRequest::factory()->count(5)->create();
         CharacteristicCategoryProduct::factory()->count(10)->create();
+
+
+        $this->call(AdminSeeder::class);
     }
 }

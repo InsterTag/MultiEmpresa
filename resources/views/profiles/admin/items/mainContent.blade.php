@@ -225,100 +225,119 @@
 
         <!-- Users Tab -->
         <div id="content-users" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold custom-text-primary">Gestión de Usuarios</h2>
-                <button class="custom-primary-bg text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-                    <i data-lucide="download" class="w-4 h-4 inline mr-2"></i>
-                    Exportar Datos
-                </button>
-            </div>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold custom-text-primary">Gestión de Usuarios</h2>
+    </div>
 
-            <!-- Users Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div class="custom-bg-white p-4 rounded-lg shadow-sm">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-green-100 p-2 rounded-lg">
-                            <i data-lucide="user-check" class="w-5 h-5 text-green-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm custom-text-secondary">Usuarios Activos</p>
-                            <p id="active-users-detail" class="text-xl font-bold custom-text-primary">--</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="custom-bg-white p-4 rounded-lg shadow-sm">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-yellow-100 p-2 rounded-lg">
-                            <i data-lucide="user-x" class="w-5 h-5 text-yellow-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm custom-text-secondary">Usuarios Inactivos</p>
-                            <p id="inactive-users-detail" class="text-xl font-bold custom-text-primary">--</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="custom-bg-white p-4 rounded-lg shadow-sm">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-blue-100 p-2 rounded-lg">
-                            <i data-lucide="user-plus" class="w-5 h-5 text-blue-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm custom-text-secondary">Nuevos (30 días)</p>
-                            <p id="new-users-detail" class="text-xl font-bold custom-text-primary">--</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Users Table -->
-            <div class="custom-bg-white rounded-lg shadow-sm overflow-hidden">
-                <div class="p-4 border-b custom-border">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                        <h3 class="text-lg font-medium custom-text-primary">Lista de Usuarios</h3>
-                        <div class="mt-3 sm:mt-0 flex space-x-2">
-                            <select class="px-3 py-2 border custom-border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option>Todos los estados</option>
-                                <option>Activos</option>
-                                <option>Inactivos</option>
-                            </select>
-                            <input type="text" placeholder="Buscar usuario..." class="px-3 py-2 border custom-border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y custom-border">
-                        <thead class="custom-bg-light">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Usuario</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Email</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Empresa</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Estado</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Último Acceso</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="users-table-body" class="custom-bg-white divide-y custom-border">
-                            <!-- Users will be loaded here by Laravel -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Pagination -->
-                <div class="px-6 py-3 border-t custom-border">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm custom-text-secondary">
-                            Mostrando resultados de usuarios
-                        </p>
-                        <div class="flex space-x-1">
-                            <!-- Pagination buttons will be generated by Laravel -->
-                        </div>
-                    </div>
+    <!-- Users Table -->
+    <div class="custom-bg-white rounded-lg shadow-sm overflow-hidden">
+        <div class="p-4 border-b custom-border">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <h3 class="text-lg font-medium custom-text-primary">Usuarios Registrados</h3>
+                <div class="mt-3 sm:mt-0 flex space-x-2">
+                    <select class="px-3 py-2 border custom-border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>Todos los estados</option>
+                        <option>Activos</option>
+                        <option>Inactivos</option>
+                    </select>
+                    <input type="text" placeholder="Buscar usuario..." class="px-3 py-2 border custom-border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
         </div>
+        
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y custom-border">
+                <thead class="custom-bg-light">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Rol</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Teléfono</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium custom-text-secondary uppercase tracking-wider">Registro</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium custom-text-secondary uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="custom-bg-white divide-y custom-border">
+                    @forelse($users as $user)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="mailto:{{ $user->email }}" class="text-blue-600 hover:underline">
+                                    {{ $user->email }}
+                                </a>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-800">
+                                {{ $user->roles->pluck('name')->join(', ') ?: 'Sin rol' }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($user->phone)
+                                    <a href="tel:{{ $user->phone }}" class="hover:underline">
+                                        {{ $user->phone }}
+                                    </a>
+                                @else
+                                    <span class="text-gray-400">No registrado</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ $user->created_at->format('d/m/Y H:i') }}
+                                <br>
+                                <span class="text-xs text-gray-500">
+                                    ({{ $user->created_at->diffForHumans() }})
+                                </span>
+                            </td>
+                            <!-- Acciones -->
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <!-- Botón Ver Más -->
+                                <a href="" 
+                                    class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm hover:bg-blue-200 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    Ver más
+                                </a>
+
+                                <!-- Botón Configuración -->
+                                <div class="inline-block relative">
+                                    <button class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </button>
+
+                                    <!-- Menú desplegable -->
+                                    <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                                        <div class="py-1">
+                                            <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Editar</a>
+                                            <form action="" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100" onclick="return confirm('¿Eliminar este usuario?')">Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                No hay usuarios registrados
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            <!-- Paginación -->
+            <div class="mt-4">
+                {{ $users->links() }}
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <!-- Messages Tab -->
         <div id="content-messages" class="tab-content hidden">

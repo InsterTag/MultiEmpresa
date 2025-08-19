@@ -18,11 +18,6 @@ Route::get('/productos', function () {
     return view('products.products');
 })->name('productos');
 
-//superAdmin
-Route::get('/superAdmin', function () {
-    return view('profiles.admin.admin');
-})->name('superAdmin');
-
 
 
 
@@ -97,7 +92,6 @@ Route::get('/superAdmin', function () {return view('profiles.admin.admin');})->n
 
 //creacion empresas
 Route::post('/register-company', [CompanyController::class, 'store'])->name('register.company');
-Route::get('/superAdmin', [AdminController::class, 'showCompanies'])->name('superAdmin');
-
+Route::get('/superAdmin', [AdminController::class, 'showCompaniesAndUsers'])->name('superAdmin');
 
 
