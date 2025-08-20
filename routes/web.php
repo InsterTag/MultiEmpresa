@@ -8,6 +8,7 @@
     use App\Http\Controllers\Auth\CompanyAuthController;
     use App\Http\Controllers\PaymentCardController;
     use App\Http\Controllers\ProductController;
+    use App\Http\Controllers\BranchController;
 
 
     //home
@@ -36,9 +37,9 @@
         return view('profiles.company.analysis.analysis');
     })->name('analysis');
 
-    Route::get('/branches', function () {
-        return view('profiles.company.branches.branches');
-    })->name('branches');
+    // Route::get('/branches', function () {
+    //     return view('profiles.company.branches.branches');
+    // })->name('branches');
 
     Route::get('/employees', function () {
         return view('profiles.company.employees.employees');
@@ -99,3 +100,10 @@
     
     Route::resource('products', ProductController::class);
     Route::get('/products', function () {return view('products');})->name('products');
+
+
+    Route::middleware('auth')->group(function () {
+    Route::get('/branches', [BranchController::class, 'index'])->name('branches');
+    Route::post('/branchsection', [BranchController::class, 'store'])->name('branches.store');
+    Route::delete('/branchsection/{branch}', [BranchController::class, 'destroy'])->name('branches.destroy');
+});

@@ -4,62 +4,50 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BranchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+// Mostrar lista de branches
     public function index()
     {
-        //
+        $user = Auth::user();
+        $companyId = $user->company_id ?? 1; // o el id por defecto si no hay empresa
+
+        $branches = Branch::where('company_id', $companyId)->paginate(10);
+
+        return view('profiles.company.branches.branches', compact('branches'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar nueva branch
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'    => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'email'   => 'required|email|max:255',
+            'phone'   => 'required|string|max:20',
+        ]);
+
+        $user = Auth::user();
+        $companyId = $user->company_id ?? 1; // por defecto si no hay empresa
+
+        $branch = new Branch();
+        $branch->company_id = $companyId;
+        $branch->name       = $request->name;
+        $branch->address    = $request->address;
+        $branch->email      = $request->email;
+        $branch->phone      = $request->phone;
+        $branch->save();
+
+        return redirect()->back()->with('success', 'Sucursal creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Eliminar branch
     public function destroy(Branch $branch)
     {
-        //
+        $branch->delete();
+
+        return redirect()->back()->with('success', 'Sucursal eliminada correctamente.');
     }
 }

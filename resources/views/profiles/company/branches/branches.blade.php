@@ -128,143 +128,140 @@
             </div>
         </div>
 
-        <!-- Table -->
-        <div class="custom-bg-white rounded-2xl shadow-sm custom-border border overflow-hidden animate-container" style="animation-delay: 0.7s;">
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead class="custom-bg-light">
-                        <tr>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Sucursal</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Código</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Ciudad</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Dirección</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Gerente</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Empleados</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Estado</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y custom-border">
-                        <tr class="hover:custom-hover-bg transition-colors">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                                        <span class="text-sm font-bold custom-primary">SC</span>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium custom-text-primary">Sucursal Centro</div>
-                                        <div class="text-sm custom-text-secondary">sucursal.centro@empresa.com</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-sm custom-text-primary">SUC-001</td>
-                            <td class="px-6 py-4 text-sm custom-text-primary">Bogotá</td>
-                            <td class="px-6 py-4 text-sm custom-text-primary">Carrera 7 #32-16</td>
-                            <td class="px-6 py-4 text-sm custom-text-primary">María González</td>
-                            <td class="px-6 py-4 text-sm custom-text-primary">12</td>
-                            <td class="px-6 py-4">
-                                <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Activa</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-3">
-                                    <button class="text-blue-600 hover:text-blue-800 transition-colors" title="Ver detalles">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                        </svg>
-                                    </button>
-                                    <button class="text-gray-600 hover:text-gray-800 transition-colors" title="Editar">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                        </svg>
-                                    </button>
-                                    <button class="text-red-600 hover:text-red-800 transition-colors" title="Eliminar">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <!-- Tabla de Sucursales -->
+<div class="custom-bg-white rounded-2xl shadow-sm custom-border border overflow-hidden animate-container" style="animation-delay: 0.7s;">
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="custom-bg-light">
+                <tr>
+                    <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Sucursal</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Dirección</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Email</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Teléfono</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold custom-text-primary">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y custom-border">
+                @forelse($branches as $branch)
+                <tr class="hover:custom-hover-bg transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-sm font-bold custom-primary">{{ strtoupper(substr($branch->name, 0, 2)) }}</span>
+                            </div>
+                            <div>
+                                <div class="font-medium custom-text-primary">{{ $branch->name }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm custom-text-primary">{{ $branch->address }}</td>
+                    <td class="px-6 py-4 text-sm custom-text-primary">{{ $branch->email }}</td>
+                    <td class="px-6 py-4 text-sm custom-text-primary">{{ $branch->phone }}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-3">
+                            <!-- Editar (puedes vincularlo al formulario de edición) -->
+                            <a href="" class="text-gray-600 hover:text-gray-800 transition-colors" title="Editar">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                            </a>
 
-            <!-- Pagination -->
-            <div class="px-6 py-4 custom-bg-light flex items-center justify-between">
-                <div class="text-sm custom-text-secondary">
-                    Mostrando 1 de 1 sucursal
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button class="px-3 py-1 text-sm custom-text-secondary hover:custom-text-primary transition-colors">
-                        Anterior
-                    </button>
-                    <button class="px-3 py-1 text-sm custom-primary-bg text-white rounded">
-                        1
-                    </button>
-                    <button class="px-3 py-1 text-sm custom-text-secondary hover:custom-text-primary transition-colors">
-                        Siguiente
-                    </button>
-                </div>
-            </div>
+                            <!-- Eliminar -->
+                            <form action="{{ route('branches.destroy', $branch->id) }}" method="POST" class="delete-branch-form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:text-red-800 transition-colors" title="Eliminar">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                        No hay sucursales registradas.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="px-6 py-4 custom-bg-light flex items-center justify-between">
+        <div class="text-sm custom-text-secondary">
+            Mostrando {{ $branches->firstItem() ?? 0 }} a {{ $branches->lastItem() ?? 0 }} de {{ $branches->total() ?? 0 }} sucursales
+        </div>
+        <div class="flex items-center space-x-2">
+            {{ $branches->links() }}
+        </div>
+    </div>
+</div>
+
+
         </div>
     </div>
 
     <!-- Sección Nueva Sucursal -->
-    <div id="seccion-nueva" class="section-content hidden">
-        <div class="custom-bg-white rounded-2xl p-8 shadow-sm custom-border border animate-container">
-            <div class="text-center py-20">
-                <div class="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                </div>
-                <h2 class="text-3xl font-bold custom-text-primary mb-4">Nueva Sucursal</h2>
-                <p class="custom-text-secondary text-lg mb-8">Aquí podrás crear una nueva sucursal para tu empresa</p>
-                
-                <!-- Formulario simple como placeholder -->
-                <div class="max-w-2xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                        <div>
-                            <label class="block text-sm font-medium custom-text-secondary mb-2">Nombre de la Sucursal</label>
-                            <input type="text" placeholder="Ej: Sucursal Norte" 
-                                   class="w-full px-4 py-3 custom-border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium custom-text-secondary mb-2">Código</label>
-                            <input type="text" placeholder="Ej: SUC-002" 
-                                   class="w-full px-4 py-3 custom-border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium custom-text-secondary mb-2">Ciudad</label>
-                            <select class="w-full px-4 py-3 custom-border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                <option>Seleccionar ciudad</option>
-                                <option>Bogotá</option>
-                                <option>Medellín</option>
-                                <option>Cali</option>
-                                <option>Barranquilla</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium custom-text-secondary mb-2">Gerente</label>
-                            <input type="text" placeholder="Nombre del gerente" 
-                                   class="w-full px-4 py-3 custom-border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium custom-text-secondary mb-2">Dirección</label>
-                            <input type="text" placeholder="Dirección completa" 
-                                   class="w-full px-4 py-3 custom-border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        </div>
-                    </div>
-                    <div class="mt-8">
-                        <button class="custom-primary-bg text-white px-8 py-3 rounded-lg hover:custom-primary-dark-bg transition-colors font-medium">
-                            Crear Sucursal
-                        </button>
-                    </div>
-                </div>
+<div id="seccion-nueva" class="section-content hidden">
+    <div class="custom-bg-white rounded-2xl p-8 shadow-sm custom-border border animate-container">
+        <div class="text-center py-8">
+            <div class="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
             </div>
+            <h2 class="text-2xl md:text-3xl font-bold custom-text-primary mb-2">Nueva Sucursal</h2>
+            <p class="custom-text-secondary text-sm md:text-lg mb-6">Crea una nueva sucursal para tu empresa</p>
+
+            <!-- Formulario para crear sucursal -->
+            <form action="{{ route('branches.store') }}" method="POST" class="max-w-2xl mx-auto space-y-6">
+                @csrf
+
+                <!-- company_id oculto -->
+                <input type="hidden" name="company_id" value="{{ Auth::user()->company->id ?? '' }}">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium custom-text-secondary mb-1">Nombre de la Sucursal *</label>
+                        <input type="text" name="name" placeholder="Ej: Sucursal Norte" required
+                               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium custom-text-secondary mb-1">Dirección *</label>
+                        <input type="text" name="address" placeholder="Dirección completa" required
+                               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium custom-text-secondary mb-1">Email *</label>
+                        <input type="email" name="email" placeholder="correo@sucursal.com" required
+                               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium custom-text-secondary mb-1">Teléfono *</label>
+                        <input type="text" name="phone" placeholder="Ej: 3233509658" required
+                               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <button type="submit"
+                            class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
+                        Crear Sucursal
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
+
 
     <!-- Sección Estadísticas -->
     <div id="seccion-estadisticas" class="section-content hidden">
@@ -432,6 +429,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Observar cambios en todas las secciones
     sections.forEach(section => {
         observer.observe(section, { attributes: true });
+    });
+});
+
+document.querySelectorAll('.delete-branch-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita el envío inmediato
+        const confirmed = confirm('¿Estás seguro de que deseas eliminar esta sucursal?');
+        if (confirmed) {
+            form.submit(); // Si confirma, enviamos el formulario
+        }
     });
 });
 </script>
