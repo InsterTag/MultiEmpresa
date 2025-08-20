@@ -16,10 +16,7 @@
         return view('home');
     })->name('home');
 
-    //products
-    Route::get('/productos', function () {
-        return view('products.products');
-    })->name('productos');
+    Route::get('/productos', [ProductController::class, 'index2'])->name('products.index');
 
     //shoppintcart
     Route::get('/shoppingcart', function () {

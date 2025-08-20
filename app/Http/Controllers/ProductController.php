@@ -51,25 +51,19 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Producto agregado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(Product $product)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit(Product $product)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, Product $product)
     {
         //
@@ -87,4 +81,36 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Producto eliminado correctamente.');
     }
+
+
+
+
+
+
+
+
+
+
+    public function index2()
+    {
+    // Obtenemos todos los productos con sus categorías y características
+    $products = Product::with(['categories.characteristics'])->get();
+
+    $filters = [];
+    foreach ($products as $product) {
+        foreach ($product->categories as $category) {
+            if (!isset($filters[$category->name])) {
+                $filters[$category->name] = [];
+            }
+
+            foreach ($category->characteristics as $char) {
+                $charName = $char->name;
+                $charValue = $char->pivot->characteristic_id;
+                $filters[$category->name][$charName][$charValue] = $char->name;
+            }
+        }
+    }
+
+    return view('products.products', compact('products', 'filters'));
+}
 }
