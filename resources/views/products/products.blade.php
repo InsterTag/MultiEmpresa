@@ -78,8 +78,17 @@
 </div>
 
 <!-- Notificación -->
-<div id="notification" class="notification hidden">
-    Producto añadido al carrito
+<div id="notification" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <div class="flex items-center gap-3">
+        <i class="fas fa-check-circle text-xl"></i>
+        <div>
+            <p id="notificationTitle" class="font-semibold">¡Producto agregado!</p>
+            <p id="notificationMessage" class="text-sm opacity-90">El producto se agregó al carrito correctamente</p>
+        </div>
+        <button id="closeNotification" class="ml-4 text-white hover:text-gray-200">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 </div>
 
 <!-- Modal del Carrito -->
@@ -91,3 +100,5 @@
 @endsection
 
 @vite(['resources/js/products.js'])
+
+@vite(['resources/js/modalShoppingcart.js'])
