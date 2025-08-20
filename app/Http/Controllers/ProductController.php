@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Characteristic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,10 +14,15 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     public function index()
-    {
-        $products = Product::paginate(10); // 10 productos por página
-        return view('profiles.company.productsection.productsSection', compact('products'));
-    }
+{
+    $products = Product::with('categories')->paginate(10); // productos con categorías
+    $categories = Category::all();
+    $characteristics = Characteristic::all();
+    $product = new Product(); // producto vacío para el modal
+
+    return view('profiles.company.productsection.productsSection', compact('products', 'categories', 'characteristics', 'product'));
+}
+
 
 
         public function store(Request $request)
@@ -51,23 +58,71 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Producto agregado correctamente.');
     }
 
-    
+    /**
+     * Display the specified resource.
+     */
     public function show(Product $product)
     {
         //
     }
 
-    
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Product $product)
     {
         //
     }
 
-    
+     // Guardar edición
     public function update(Request $request, Product $product)
-    {
-        //
+{
+    $validated = $request->validate([
+        'name'        => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'barcode'     => 'nullable|string|max:255',
+        'unit_price'  => 'required|numeric|min:0',
+        'state'       => 'required|in:available,unavailable',
+        'media'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'categories'  => 'array',
+        'characteristic_id' => 'nullable|exists:characteristics,id',
+    ]);
+
+    // actualizar datos principales
+    $product->update([
+        'name'        => $request->name,
+        'description' => $request->description,
+        'barcode'     => $request->barcode,
+        'unit_price'  => $request->unit_price,
+        'state'       => $request->state,
+    ]);
+
+    // actualizar imagen
+    if ($request->hasFile('media')) {
+        if ($product->media) {
+            Storage::disk('public')->delete($product->media);
+        }
+        $path = $request->file('media')->store('products', 'public');
+        $product->media = $path;
+        $product->save();
     }
+
+    // actualizar pivot con característica incluida
+    if ($request->has('categories')) {
+        $syncData = [];
+        foreach ($request->categories as $catId) {
+            $syncData[$catId] = [
+                'characteristic_id' => $request->characteristic_id ?? null,
+            ];
+        }
+        $product->categories()->sync($syncData);
+    }
+
+    return redirect()->back()->with('success', 'Producto actualizado correctamente ✅');
+}
+
+
+
 
     public function destroy(Product $product)
     {
@@ -81,6 +136,7 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Producto eliminado correctamente.');
     }
+
 
 
 

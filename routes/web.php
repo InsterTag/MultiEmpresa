@@ -16,7 +16,7 @@
         return view('home');
     })->name('home');
 
-    Route::get('/productos', [ProductController::class, 'index2'])->name('products.index');
+    Route::get('/productos2', [ProductController::class, 'index2'])->name('products.index');
 
     //shoppintcart
     Route::get('/shoppingcart', function () {
@@ -33,10 +33,6 @@
     Route::get('/analysis', function () {
         return view('profiles.company.analysis.analysis');
     })->name('analysis');
-
-    // Route::get('/branches', function () {
-    //     return view('profiles.company.branches.branches');
-    // })->name('branches');
 
     Route::get('/employees', function () {
         return view('profiles.company.employees.employees');
@@ -91,12 +87,10 @@
     
     
     
-    
-    
-    
-    
     Route::resource('products', ProductController::class);
     Route::get('/products', function () {return view('products');})->name('products');
+
+
 
 
     Route::middleware('auth')->group(function () {
