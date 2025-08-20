@@ -19,7 +19,7 @@
                     <a href="{{ route('home') }}" class="navbar-button custom-text-primary hover:custom-primary font-medium px-2 py-2">
                         Destacados
                     </a>
-                    <a href="{{ route('productos') }}" class="navbar-button custom-text-primary hover:custom-primary font-medium px-2 py-2">
+                    <a href="{{ route('products.index') }}" class="navbar-button custom-text-primary hover:custom-primary font-medium px-2 py-2">
                         Productos
                     </a>
                     <div class="categories-container">
@@ -307,7 +307,7 @@
                 </div>
             </div>
             <a href="{{ route('home') }}" class="block py-2 custom-text-primary font-medium">Destacados</a>
-            <a href="{{ route('productos') }}" class="block py-2 custom-text-primary font-medium">Productos</a>
+            <a href="{{ route('products.index') }}" class="block py-2 custom-text-primary font-medium">Productos</a>
             <button class="block py-2 custom-text-primary font-medium text-left w-full">Categorías</button>
 
             <!-- Botones de autenticación en móvil -->
