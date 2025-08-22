@@ -8,7 +8,7 @@
                     <div class="w-8 h-8 custom-primary-bg rounded-lg flex items-center justify-center">
                         <i class="fas fa-store text-white text-sm"></i>
                     </div>
-                    <span class="text-xl font-bold logo-text">marketplace-pro</span>
+                    <span class="text-xl font-bold logo-text">MultiCompany</span>
                 </div>
             </div>
 

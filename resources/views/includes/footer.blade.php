@@ -8,7 +8,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg">
                             <i class="fas fa-store text-xl"></i>
                         </div>
-                        <span class="text-2xl font-bold">MarketPlace<span class="text-blue-400">Pro</span></span>
+                        <span class="text-2xl font-bold">MultiCompany<span class="text-blue-400">Pro</span></span>
                     </div>
                     <p class="text-gray-400 mb-4 max-w-md">
                         Conectamos empresas con clientes de todo el mundo. La plataforma de comercio electrónico más confiable para hacer crecer tu negocio.
