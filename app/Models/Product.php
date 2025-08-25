@@ -11,6 +11,11 @@ class Product extends Model {
         'branch_id', 'name', 'description', 'barcode', 'unit_price', 'media', 'state'
     ];
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function branch() {
         return $this->belongsTo(Branch::class);
     }

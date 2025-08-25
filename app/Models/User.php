@@ -33,7 +33,7 @@ class User extends Authenticatable
     }
 
     public function companies() {
-        return $this->hasMany(Company::class);
+        return $this->hasOne(Company::class, 'user_id');
     }
 
     public function carts() {

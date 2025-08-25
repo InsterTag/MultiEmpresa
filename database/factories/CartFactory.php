@@ -4,13 +4,14 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Cart;
+use App\Models\User;
 
 class CartFactory extends Factory
 {
     protected $model = Cart::class;
     public function definition(): array {
         return [
-            'user_id' => 1,
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
             'status' => 'pending',
         ];
     }
