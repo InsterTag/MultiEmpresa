@@ -97,4 +97,48 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
+
+ // Mostrar dirección en la vista
+    public function showAddress()
+    {
+        $user = Auth::user();
+        return view('profiles.user.items.Address', compact('user'));
+    }
+
+
+
+
+    // Guardar dirección
+    public function updateAddress(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'name'       => 'required|string|max:255',
+        'last_name'  => 'nullable|string|max:255',
+        'phone'      => 'nullable|string|max:20',
+        'address'    => 'nullable|string|max:255',
+        'department' => 'nullable|string|max:255',
+        'postalcode' => 'nullable|string|max:20',
+    ]);
+
+    // Asignar manualmente
+    $user->name       = $request->name;
+    $user->last_name  = $request->last_name;
+    $user->phone      = $request->phone;
+    $user->address    = $request->address;
+    $user->department = $request->department;
+    $user->postalcode = $request->postalcode;
+
+    $user->save();
+
+    return redirect()->back()->with('success', 'Dirección actualizada correctamente ✅');
+}
+
+
+
+
+
 }
