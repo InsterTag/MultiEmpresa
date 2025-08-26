@@ -5,7 +5,7 @@
     use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\CompanyController;
     use App\Http\Controllers\AdminController;
-    use App\Http\Controllers\Auth\CompanyAuthController;
+    use App\Http\Controllers\AddressController;
     use App\Http\Controllers\PaymentCardController;
     use App\Http\Controllers\ProductController;
     use App\Http\Controllers\BranchController;
@@ -65,8 +65,8 @@
         Route::get('/profile/payments', [PaymentCardController::class, 'index'])->name('payments.index');
         Route::post('/payments', [PaymentCardController::class, 'store'])->name('payments.store');
         Route::delete('/payments/{card}', [PaymentCardController::class, 'destroy'])->name('payments.destroy');
-        
-        
+
+        Route::resource('addresses', AddressController::class);
         
     });
     
@@ -98,3 +98,10 @@
     Route::post('/branchsection', [BranchController::class, 'store'])->name('branches.store');
     Route::delete('/branchsection/{branch}', [BranchController::class, 'destroy'])->name('branches.destroy');
 });
+
+
+
+
+
+
+

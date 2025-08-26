@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Product;
+use App\Models\Company;
+use App\Models\Branch;
 
 class ProductFactory extends Factory
 {
@@ -11,7 +13,8 @@ class ProductFactory extends Factory
 
     public function definition(): array {
         return [
-            'branch_id' => 1,
+            'company_id' => Company::inRandomOrder()->first()->id ?? Company::factory(),
+            'branch_id'  => Branch::inRandomOrder()->first()->id ?? Branch::factory(),
             'name' => $this->faker->words(2, true),
             'description' => $this->faker->paragraph,
             'barcode' => $this->faker->ean13,

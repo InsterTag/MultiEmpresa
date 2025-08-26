@@ -4,7 +4,7 @@
         <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
             <i class="fas fa-rocket"></i>
         </div>
-        <h2 class="text-xl font-bold text-gray-800 mb-1">TechCorp Solutions</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-1">MultiCompany</h2>
         <p class="text-sm text-gray-600">Panel de Control</p>
         <div class="mt-3">
             <span class="px-3 py-1.5 bg-green-100 text-green-800 text-xs rounded-full shadow-sm">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="text-left">
                     <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->username ?? auth()->user()->name }}</p>
-                    <p class="text-xs text-gray-600">Administrador</p>
+                    <p class="text-xs text-gray-600">Empresa</p>
                 </div>
             </div>
             <i class="fas fa-chevron-down text-sm text-gray-500 transition-transform duration-300" id="profileIcon"></i>

@@ -51,7 +51,7 @@
             @include('profiles.user.items.Payments')
 
             <!-- Address Tab  -->
-            @include('profiles.user.items.Address')
+            @include('profiles.user.items.Address', ['user' => Auth::user()])
         </div>
 
     </div>

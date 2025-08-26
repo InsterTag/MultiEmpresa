@@ -199,60 +199,65 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        window.openEditModal = function(productId, name, barcode, category, price, stock, state, description, media) {
+        window.openEditModal = function(productId, name, barcode, categories, price, stock, state, description, media) {
     try {
-        const modal = document.getElementById('editModal');
-        if (!modal) {
-            console.warn('⚠️ Modal de edición no encontrado');
-            return;
-        }
-
-        const editForm        = document.getElementById('editForm');
+        const modal           = document.getElementById('editModal');
+        const form            = document.getElementById('editForm');
         const editName        = document.getElementById('editName');
         const editBarcode     = document.getElementById('editBarcode');
-        const editCategory    = document.getElementById('editCategory');
+        const editCategories  = document.getElementById('editCategories');
         const editPrice       = document.getElementById('editPrice');
         const editState       = document.getElementById('editState');
         const editDescription = document.getElementById('editDescription');
-        const editStock       = document.getElementById('editStock'); // si existe
         const currentImage    = document.getElementById('currentImage');
 
-        // ✅ Reemplazar __ID__ por el id real
-        if (editForm) {
-            let actionUrl = editForm.getAttribute('action');
-            if (actionUrl.includes('__ID__')) {
-                actionUrl = actionUrl.replace('__ID__', productId);
-            } else {
-                actionUrl = `/products/${productId}`;
-            }
-            editForm.action = actionUrl;
-        }
+        if (!modal || !form) return;
 
-        // ✅ Rellenar campos
+        // 👉 Actualizamos la action del form con el ID del producto
+        form.action = `/products/${productId}`;
+
+        // 👉 Inputs básicos
         if (editName)        editName.value        = name || '';
         if (editBarcode)     editBarcode.value     = barcode || '';
-        if (editCategory)    editCategory.value    = category || '';
         if (editPrice)       editPrice.value       = price ?? 0;
         if (editState)       editState.value       = state || 'available';
         if (editDescription) editDescription.value = description || '';
-        if (editStock)       editStock.value       = stock || '0';
 
+        // 👉 Categorías (TomSelect)
+        if (editCategories && editCategories.tomselect) {
+            editCategories.tomselect.clear();
+            if (categories) {
+                // si pasas un solo ID
+                if (Array.isArray(categories)) {
+                    categories.forEach(c => editCategories.tomselect.addItem(c));
+                } else {
+                    editCategories.tomselect.addItem(categories);
+                }
+            }
+        }
+
+        // 👉 Imagen actual
         if (currentImage) {
             currentImage.innerHTML = media
                 ? `<div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                      <img src="/storage/${media}" alt="Imagen actual" class="w-16 h-16 object-cover rounded-lg">
-                      <span class="text-sm text-gray-600">Imagen actual</span>
+                       <img src="${media.startsWith('http') ? media : '/storage/' + media}" 
+                            alt="Imagen actual" 
+                            class="w-16 h-16 object-cover rounded-lg">
+                       <span class="text-sm text-gray-600">Imagen actual</span>
                    </div>`
                 : '<p class="text-sm text-gray-500">Sin imagen actual</p>';
         }
 
+        // 👉 Abrir modal
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        console.log('✅ Modal de edición abierto para producto:', name);
+
     } catch (error) {
         console.error('❌ Error al abrir modal de edición:', error);
     }
 };
+
+
 
 
         

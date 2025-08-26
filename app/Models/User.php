@@ -23,7 +23,10 @@ class User extends Authenticatable
     'username',
 ];
 
-
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 
     public function roles()
     {
@@ -33,7 +36,7 @@ class User extends Authenticatable
     }
 
     public function companies() {
-        return $this->hasMany(Company::class);
+        return $this->hasOne(Company::class, 'user_id');
     }
 
     public function carts() {
