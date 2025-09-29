@@ -22,7 +22,7 @@
                                     </div>
                                     <div>
                                         <h4 class="text-lg font-semibold custom-text-primary">
-                                            {{ $address->is_default ? 'Dirección Principal' : 'Dirección Secundaria' }}
+                                            {{'Dirección Principal'}}
                                         </h4>
                                         @if($address->is_default)
                                             <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-lg font-medium">Activa</span>
